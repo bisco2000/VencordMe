@@ -1,0 +1,216 @@
+/*
+ * pnygo - Check ID styles
+ *
+ * The search bar plus the three extra sections the card adds over the shared
+ * Girlfriend card: right-now presence, mutual servers and the tracking note.
+ * The profile itself is shared and lives in modules/profile.css.
+ */
+
+.vc-pnygo-cid {
+    padding: 12px 20px 4px;
+}
+
+.vc-pnygo-cid-bar {
+    display: flex;
+    gap: 8px;
+    align-items: stretch;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto 4px;
+}
+
+.vc-pnygo-cid-bar input {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+}
+
+.vc-pnygo-cid-hint {
+    max-width: 460px;
+    margin: 0 auto;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--text-muted, #949ba4);
+    text-align: left;
+    word-break: break-word;
+}
+
+.vc-pnygo-cid-hint--bad { color: var(--text-danger, #f23f43); }
+.vc-pnygo-cid-hint--warn { color: var(--text-warning, #f0b232); }
+
+.vc-pnygo-cid-result { margin-top: 10px; }
+
+/* ---- extra sections under the shared card ------------------------------- */
+
+.vc-pnygo-cid-title {
+    max-width: 460px;
+    margin: 16px auto 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    color: var(--text-muted, #949ba4);
+    text-align: left;
+}
+
+.vc-pnygo-cid-block {
+    width: 100%;
+    max-width: 460px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--background-secondary, #2b2d31);
+    border: 1px solid var(--background-modifier-accent, rgba(255, 255, 255, .08));
+    text-align: left;
+}
+
+.vc-pnygo-cid-row {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    padding: 9px 14px;
+    font-size: 13px;
+}
+
+.vc-pnygo-cid-row + .vc-pnygo-cid-row {
+    border-top: 1px solid rgba(255, 255, 255, .06);
+}
+
+.vc-pnygo-cid-k {
+    flex: 0 0 118px;
+    color: var(--text-muted, #949ba4);
+    font-weight: 600;
+}
+
+.vc-pnygo-cid-v {
+    flex: 1;
+    min-width: 0;
+    color: var(--header-primary, #f2f3f5);
+    word-break: break-word;
+}
+
+.vc-pnygo-cid-live { color: #23a559; font-weight: 700; }
+.vc-pnygo-cid-muted { color: var(--text-muted, #949ba4); font-style: italic; }
+
+/* ---- mutual servers ----------------------------------------------------- */
+
+.vc-pnygo-cid-scan {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 460px;
+    margin: 0 auto 6px;
+}
+
+.vc-pnygo-cid-scanText {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text-muted, #949ba4);
+    text-align: left;
+}
+
+.vc-pnygo-cid-guilds {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 460px;
+    max-height: 300px;
+    overflow-y: auto;
+    border-radius: 12px;
+    background: var(--background-secondary, #2b2d31);
+    border: 1px solid var(--background-modifier-accent, rgba(255, 255, 255, .08));
+    text-align: left;
+}
+
+.vc-pnygo-cid-guild {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--header-primary, #f2f3f5);
+    cursor: pointer;
+}
+
+.vc-pnygo-cid-guild + .vc-pnygo-cid-guild {
+    border-top: 1px solid rgba(255, 255, 255, .06);
+}
+
+.vc-pnygo-cid-guild:hover { background: rgba(255, 255, 255, .04); }
+
+.vc-pnygo-cid-guildIcon {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--background-tertiary, #1e1f22);
+}
+
+.vc-pnygo-cid-guildPh {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    background: var(--background-tertiary, #1e1f22);
+    color: var(--text-muted, #949ba4);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.vc-pnygo-cid-guildName {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vc-pnygo-cid-guildNick {
+    color: var(--text-muted, #949ba4);
+    font-size: 12px;
+}
+
+.vc-pnygo-cid-vc {
+    flex: 0 0 auto;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #23a559;
+    background: rgba(35, 165, 89, .12);
+    border: 1px solid rgba(35, 165, 89, .35);
+}
+
+/* ---- per-server link chips --------------------------------------------- */
+
+.vc-pnygo-cid-links {
+    display: flex;
+    flex: 0 0 auto;
+    gap: 6px;
+}
+
+.vc-pnygo-cid-link {
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.5;
+    white-space: nowrap;
+    cursor: pointer;
+    color: var(--text-normal, #dbdee1);
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .16);
+    transition: color .12s ease, background .12s ease, border-color .12s ease;
+}
+
+.vc-pnygo-cid-link:hover {
+    color: #fff;
+    background: rgba(88, 101, 242, .3);
+    border-color: rgba(88, 101, 242, .65);
+}

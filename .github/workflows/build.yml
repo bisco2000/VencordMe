@@ -1,0 +1,62 @@
+name: Build DevBuild
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - .github/workflows/build.yml
+            - src/**
+            - browser/**
+            - scripts/build/**
+            - package.json
+            - pnpm-lock.yaml
+    workflow_dispatch:
+env:
+    FORCE_COLOR: true
+
+permissions:
+    contents: write
+
+jobs:
+    Build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v7
+
+            - uses: pnpm/action-setup@v6 # Install pnpm using packageManager key in package.json
+
+            - name: Use Node.js 24
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build (standalone, updater disabled)
+              run: pnpm build --standalone --disable-updater
+
+            - name: Generate plugin list
+              run: pnpm generatePluginJson dist/plugins.json dist/plugin-readmes.json
+
+            - name: Clean up obsolete files
+              run: |
+                  rm -rf dist/*-unpacked dist/vendor Vencord.user.css vencordDesktopRenderer.css vencordDesktopRenderer.css.map
+
+            - name: Get some values needed for the release
+              id: release_values
+              run: |
+                  echo "release_tag=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+
+            - name: Upload DevBuild as release
+              run: |
+                  if ! gh release view devbuild > /dev/null 2>&1; then
+                      gh release create devbuild --prerelease --title "DevBuild" --notes "Automated DevBuild"
+                  fi
+                  gh release upload devbuild --clobber dist/*
+                  gh release edit devbuild --title "DevBuild $RELEASE_TAG"
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  RELEASE_TAG: ${{ env.release_tag }}

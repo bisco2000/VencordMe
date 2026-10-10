@@ -1,0 +1,456 @@
+/*
+ * pnygo - shared UI kit styles
+ *
+ * ONE look for every pnygo surface: the titlebar buttons, the panel cards,
+ * the action buttons, the inputs and the tabs. Every class is prefixed with
+ * "vc-pnygo" so nothing can collide with Discord's own classes.
+ *
+ * Only Discord CSS variables are used (with fallbacks), so the kit follows
+ * whatever theme the user runs.
+ */
+
+/* ------------------------------------------------------------------ */
+/* titlebar buttons                                                    */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-tb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin: 0 1px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--interactive-normal, #b5bac1);
+    cursor: pointer;
+    transition: background-color .12s ease, color .12s ease, box-shadow .12s ease;
+}
+
+.vc-pnygo-tb:hover {
+    background: var(--background-modifier-hover, #35373c);
+    color: var(--interactive-hover, #dbdee1);
+}
+
+.vc-pnygo-tb:active {
+    background: var(--background-modifier-active, #2e3035);
+}
+
+.vc-pnygo-tb--active {
+    background: var(--background-modifier-selected, #404249);
+    color: var(--interactive-active, #fff);
+}
+
+/* highlight while the panel this button opens is open */
+.vc-pnygo-tb--busy {
+    color: var(--text-link, #00a8fc);
+}
+
+.vc-pnygo-tb-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vc-pnygo-tb svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+/* a soft red halo marks the destructive entries */
+.vc-pnygo-tb--trash:hover {
+    color: var(--red-400, #f25b5b);
+}
+
+/* ------------------------------------------------------------------ */
+/* cards / panels                                                      */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-panel-body {
+    padding: 8px 16px 16px;
+}
+
+.vc-pnygo-card {
+    background: var(--background-secondary, #2b2d31);
+    border: 1px solid var(--background-modifier-accent, #3f4147);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.vc-pnygo-card--flat {
+    background: transparent;
+    border-style: dashed;
+}
+
+.vc-pnygo-card--danger {
+    border-color: color-mix(in srgb, var(--red-400, #f25b5b) 45%, transparent);
+}
+
+.vc-pnygo-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.vc-pnygo-card-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--header-primary, #f2f3f5);
+}
+
+.vc-pnygo-card-sub {
+    margin: 2px 0 0;
+    font-size: 12px;
+    color: var(--text-muted, #949ba4);
+}
+
+/* ------------------------------------------------------------------ */
+/* buttons                                                             */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color .12s ease, border-color .12s ease, color .12s ease, filter .12s ease;
+}
+
+.vc-pnygo-btn--md {
+    padding: 7px 12px;
+    min-height: 32px;
+}
+
+.vc-pnygo-btn--sm {
+    padding: 4px 9px;
+    min-height: 26px;
+    font-size: 12px;
+}
+
+.vc-pnygo-btn--icon {
+    padding: 0;
+    width: 26px;
+    min-height: 26px;
+}
+
+.vc-pnygo-btn--primary {
+    background: var(--brand-500, #5865f2);
+    color: #fff;
+}
+
+.vc-pnygo-btn--primary:hover:not(:disabled) {
+    background: var(--brand-560, #4752c4);
+}
+
+.vc-pnygo-btn--danger {
+    background: var(--red-500, #da373c);
+    color: #fff;
+}
+
+.vc-pnygo-btn--danger:hover:not(:disabled) {
+    background: var(--red-560, #a12828);
+}
+
+.vc-pnygo-btn--success {
+    background: var(--green-500, #248046);
+    color: #fff;
+}
+
+.vc-pnygo-btn--success:hover:not(:disabled) {
+    background: var(--green-560, #1a6334);
+}
+
+.vc-pnygo-btn--neutral {
+    background: var(--background-tertiary, #232428);
+    border-color: var(--background-modifier-accent, #3f4147);
+    color: var(--text-default, #dbdee1);
+}
+
+.vc-pnygo-btn--neutral:hover:not(:disabled) {
+    background: var(--background-modifier-hover, #35373c);
+    color: var(--text-default, #fff);
+}
+
+.vc-pnygo-btn--ghost {
+    background: transparent;
+    border-color: var(--background-modifier-accent, #3f4147);
+    color: var(--text-muted, #b5bac1);
+}
+
+.vc-pnygo-btn--ghost:hover:not(:disabled) {
+    background: var(--background-modifier-hover, #35373c);
+    color: var(--text-default, #dbdee1);
+}
+
+.vc-pnygo-btn--link {
+    background: transparent;
+    color: var(--text-link, #00a8fc);
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.vc-pnygo-btn--link:hover:not(:disabled) {
+    text-decoration: underline;
+}
+
+.vc-pnygo-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.vc-pnygo-btn:focus-visible {
+    outline: 2px solid var(--brand-500, #5865f2);
+    outline-offset: 1px;
+}
+
+.vc-pnygo-btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ------------------------------------------------------------------ */
+/* tabs                                                                */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding: 4px;
+    border-radius: 10px;
+    background: var(--background-tertiary, #232428);
+    border: 1px solid var(--background-modifier-accent, #3f4147);
+}
+
+.vc-pnygo-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: 1px solid transparent;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--text-muted, #b5bac1);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .12s ease, color .12s ease, border-color .12s ease;
+}
+
+.vc-pnygo-tab:hover {
+    background: var(--background-modifier-hover, #35373c);
+    color: var(--text-default, #dbdee1);
+}
+
+.vc-pnygo-tab--active {
+    background: var(--background-modifier-selected, #404249);
+    border-color: var(--background-modifier-accent, #3f4147);
+    color: var(--interactive-active, #fff);
+}
+
+/* ------------------------------------------------------------------ */
+/* rows / lists                                                        */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border-bottom: 1px dashed var(--background-modifier-accent, #3f4147);
+}
+
+.vc-pnygo-row:last-child {
+    border-bottom: 0;
+}
+
+.vc-pnygo-row:hover {
+    background: var(--background-modifier-hover, #35373c);
+}
+
+.vc-pnygo-scroll {
+    max-height: 260px;
+    overflow-y: auto;
+    padding: 4px 6px;
+    border-radius: 8px;
+    background: var(--background-tertiary, #232428);
+    border: 1px solid var(--background-modifier-accent, #3f4147);
+}
+
+/* ------------------------------------------------------------------ */
+/* fields / inputs                                                     */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+.vc-pnygo-field-label {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    color: var(--header-secondary, #b5bac1);
+}
+
+.vc-pnygo-hint {
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--text-muted, #949ba4);
+}
+
+.vc-pnygo-input,
+.vc-pnygo-textarea,
+.vc-pnygo-select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 7px 9px;
+    background: var(--input-background, var(--background-tertiary, #232428));
+    color: var(--text-normal, var(--text-default, #dbdee1));
+    border: 1px solid var(--background-modifier-accent, #3f4147);
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.vc-pnygo-textarea {
+    resize: vertical;
+    min-height: 56px;
+}
+
+.vc-pnygo-input:focus,
+.vc-pnygo-textarea:focus,
+.vc-pnygo-select:focus {
+    border-color: var(--brand-500, #5865f2);
+    outline: none;
+}
+
+.vc-pnygo-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+/* switch */
+.vc-pnygo-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    cursor: pointer;
+    user-select: none;
+}
+
+.vc-pnygo-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.vc-pnygo-switch-track {
+    position: relative;
+    flex: 0 0 auto;
+    width: 34px;
+    height: 20px;
+    border-radius: 10px;
+    background: var(--background-modifier-accent, #4e5058);
+    transition: background-color .15s ease;
+}
+
+.vc-pnygo-switch-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform .15s ease;
+}
+
+.vc-pnygo-switch input:checked + .vc-pnygo-switch-track {
+    background: var(--green-500, #248046);
+}
+
+.vc-pnygo-switch input:checked + .vc-pnygo-switch-track .vc-pnygo-switch-knob {
+    transform: translateX(14px);
+}
+
+.vc-pnygo-switch-label {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    color: var(--text-default, #dbdee1);
+}
+
+/* ------------------------------------------------------------------ */
+/* chips / dividers                                                    */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 1px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--background-modifier-accent, #3f4147);
+    color: var(--text-default, #dbdee1);
+}
+
+.vc-pnygo-chip--ok {
+    background: color-mix(in srgb, var(--green-360, #2dc770) 30%, transparent);
+    color: var(--green-360, #2dc770);
+}
+
+.vc-pnygo-chip--warn {
+    background: color-mix(in srgb, var(--yellow-360, #f0b232) 30%, transparent);
+    color: var(--yellow-360, #f0b232);
+}
+
+.vc-pnygo-chip--bad {
+    background: color-mix(in srgb, var(--red-400, #f25b5b) 30%, transparent);
+    color: var(--red-400, #f25b5b);
+}
+
+.vc-pnygo-divider {
+    height: 1px;
+    margin: 10px 0;
+    background: var(--background-modifier-accent, #3f4147);
+}
+
+.vc-pnygo-muted {
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--text-muted, #949ba4);
+}
+
+.vc-pnygo-empty {
+    padding: 18px 10px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-muted, #949ba4);
+}

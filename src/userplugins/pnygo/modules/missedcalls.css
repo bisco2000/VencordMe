@@ -1,0 +1,73 @@
+/*
+ * pnygo - MissedCalls styles
+ *
+ * The call rows are injected inside the message element that owns the id
+ * "chat-messages-<channelId>-<messageId>" — either over its content or right
+ * under it, wrapped in one div per place. They are never inserted as a
+ * sibling in Discord's message list, so the virtualised list never has to
+ * deal with a foreign node and keeps its own indexing intact.
+ *
+ * The layout mirrors Discord's own call log line:
+ *   [ phone icon in the gutter ]  Name started a call that lasted X. 4:50 PM
+ */
+
+.vc-pnygo-callrow {
+    position: relative;
+    display: grid;
+    /* first column = the avatar gutter, so the text starts where messages start */
+    grid-template-columns: var(--vc-pnygo-callrow-indent, 72px) minmax(0, 1fr);
+    align-items: center;
+    column-gap: 0;
+    padding: 5px 8px;
+    min-height: 30px;
+    font-size: 15px;
+    line-height: 1.375;
+    color: var(--text-muted, #949ba4);
+    cursor: pointer;
+    user-select: none;
+}
+
+.vc-pnygo-callrow-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: start;
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    color: var(--green-360, #23a559);
+}
+
+.vc-pnygo-callrow--missed .vc-pnygo-callrow-icon {
+    color: var(--text-muted, #949ba4);
+}
+
+/* the declined handset — same glyph Discord uses for "you did not answer" */
+.vc-pnygo-callrow--missed .vc-pnygo-callrow-icon svg {
+    transform: rotate(135deg);
+}
+
+.vc-pnygo-callrow-text {
+    min-width: 0;
+}
+
+/* names are drawn bold + white, exactly like Discord's call log */
+.vc-pnygo-callrow-text strong {
+    color: var(--header-primary, #f2f3f5);
+    font-weight: 600;
+}
+
+.vc-pnygo-callrow-ts {
+    margin-left: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted, #949ba4);
+}
+
+
+/* Several calls can sit in one place: they share this wrapper. It draws no
+ * box of its own (display: contents), so the rows look exactly like direct
+ * children of the message element � while the DOM keeps them ordered. */
+.vc-pnygo-callgroup {
+    display: contents;
+}

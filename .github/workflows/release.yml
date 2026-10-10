@@ -1,0 +1,61 @@
+name: Release Installer
+on:
+    push:
+        tags:
+            - v*
+    workflow_dispatch:
+env:
+    FORCE_COLOR: true
+
+permissions:
+    contents: write
+
+jobs:
+    Installer:
+        runs-on: windows-latest
+
+        steps:
+            - uses: actions/checkout@v7
+
+            - uses: pnpm/action-setup@v6 # Install pnpm using packageManager key in package.json
+
+            - name: Use Node.js 24
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build runtime (standalone, updater disabled)
+              run: pnpm buildStandalone --disable-updater
+
+            - name: Compile installer
+              shell: powershell
+              run: powershell -ExecutionPolicy Bypass -File installer/build.ps1
+
+            - name: Verify installer
+              shell: powershell
+              run: |
+                  $exe = Get-Item VencordMe-Setup.exe -ErrorAction Stop
+                  Write-Host ("{0} ({1:N0} bytes)" -f $exe.Name, $exe.Length)
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: VencordMe-Setup
+                  path: VencordMe-Setup.exe
+                  if-no-files-found: error
+
+            - name: Attach to release
+              if: startsWith(github.ref, 'refs/tags/')
+              shell: pwsh
+              run: |
+                  gh release view $env:GITHUB_REF_NAME > $null 2>&1
+                  if ($LASTEXITCODE -ne 0) {
+                      gh release create $env:GITHUB_REF_NAME --title $env:GITHUB_REF_NAME --generate-notes
+                  }
+                  gh release upload $env:GITHUB_REF_NAME VencordMe-Setup.exe --clobber
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,135 @@
+/*
+ * pnygo - Thems styles
+ *
+ * TWO things live here:
+ *   1. the ONE fixed background layer (picture / GIF / video). It never moves,
+ *      never resizes, never reacts to input — the compositor keeps it on its
+ *      own texture, so Discord's scrolling and typing never repaint it.
+ *   2. the panel opened by the titlebar button (same kit look as every other
+ *      pnygo surface).
+ *
+ * Rules the layer must keep (performance):
+ *   - position: fixed + contain (no layout work, no painting outside its box)
+ *   - pointer-events: none (it can never steal a click)
+ *   - NO filters, NO backdrop-filter, NO box-shadows, NO animations
+ */
+
+/* ------------------------------------------------------------------ */
+/* background layer                                                    */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-thems {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    contain: layout paint;
+    background: transparent;
+}
+
+/* Overlay mode: the same layer on top of the client (still below modals,
+   menus and tooltips, which Discord puts at z-index 10000 and above).
+   mix-blend-mode makes the picture MERGE with the UI instead of covering it:
+   dark text on dark surfaces (and light text on light surfaces) keeps its
+   contrast no matter how high the opacity is. Chosen from the panel. */
+.vc-pnygo-thems--overlay {
+    z-index: 9999;
+    opacity: var(--vc-thems-overlay-alpha, .3);
+    mix-blend-mode: var(--vc-thems-blend, overlay);
+}
+
+.vc-pnygo-thems-media {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* the dark veil between the picture and the UI (Background mode only) */
+.vc-pnygo-thems-dim {
+    position: absolute;
+    inset: 0;
+    background: #000;
+    opacity: var(--vc-thems-dim, .3);
+}
+
+.vc-pnygo-thems--overlay .vc-pnygo-thems-dim {
+    display: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* panel                                                               */
+/* ------------------------------------------------------------------ */
+
+.vc-pnygo-thems-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px 0 6px;
+}
+
+.vc-pnygo-thems-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.vc-pnygo-thems-row .vc-pnygo-input {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.vc-pnygo-thems-statusRow {
+    flex-wrap: wrap;
+}
+
+.vc-pnygo-thems-note {
+    margin-top: 6px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--text-muted, #949ba4);
+}
+
+.vc-pnygo-thems-note--bad {
+    color: var(--red-400, #f25b5b);
+}
+
+.vc-pnygo-thems-range {
+    width: 100%;
+    margin-top: 2px;
+    accent-color: var(--brand-500, #5865f2);
+    cursor: pointer;
+}
+
+.vc-pnygo-thems-picker {
+    margin-top: 10px;
+}
+
+.vc-pnygo-thems-pickerRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.vc-pnygo-thems-name {
+    flex: 1 1 140px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    color: var(--text-normal, #dbdee1);
+}
+
+.vc-pnygo-thems-panel .vc-pnygo-tabs {
+    margin-top: 4px;
+}

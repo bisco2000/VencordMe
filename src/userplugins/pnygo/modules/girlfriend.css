@@ -1,0 +1,448 @@
+/*
+ * pnygo - Girlfriend styles
+ *
+ * The song picker (plugin settings) and the player (profile card).
+ * The profile card itself is shared with the Check ID feature and lives in
+ * modules/profile.css.
+ */
+
+/* ---- "choose an mp3 from my files" row, rendered in the settings ------- */
+
+.vc-pnygo-gf-picker {
+    padding: 8px 0 4px;
+}
+
+.vc-pnygo-gf-pickerTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--header-primary, #f2f3f5);
+}
+
+.vc-pnygo-gf-pickerDesc {
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text-muted, #949ba4);
+}
+
+.vc-pnygo-gf-pickerRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.vc-pnygo-gf-pickerBtn {
+    flex: 0 0 auto;
+    padding: 7px 14px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    background: var(--brand-experiment, #5865f2);
+    transition: background .15s ease;
+}
+
+.vc-pnygo-gf-pickerBtn:hover { background: var(--brand-experiment-560, #4752c4); }
+
+.vc-pnygo-gf-pickerBtn:disabled { opacity: .5; cursor: not-allowed; }
+
+.vc-pnygo-gf-pickerBtn--ghost {
+    background: transparent;
+    color: var(--text-danger, #f23f43);
+    border: 1px solid var(--background-modifier-accent, rgba(255, 255, 255, .16));
+}
+
+.vc-pnygo-gf-pickerBtn--ghost:hover {
+    background: rgba(242, 63, 67, .12);
+}
+
+.vc-pnygo-gf-pickerName {
+    flex: 1 1 160px;
+    min-width: 0;
+    font-size: 14px;
+    color: var(--header-primary, #f2f3f5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vc-pnygo-gf-pickerHint {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-muted, #949ba4);
+    word-break: break-word;
+}
+
+.vc-pnygo-gf-pickerBtn--neutral {
+    background: transparent;
+    color: var(--text-normal, #dbdee1);
+    border: 1px solid var(--background-modifier-accent, rgba(255, 255, 255, .16));
+}
+
+.vc-pnygo-gf-pickerBtn--neutral:hover {
+    background: var(--background-modifier-hover, rgba(255, 255, 255, .06));
+}
+
+/* ---- Start/End trim editor + preview, inside the settings picker -------- */
+
+.vc-pnygo-gf-trim {
+    margin-top: 10px;
+    padding: 10px 12px 12px;
+    border: 1px solid var(--background-modifier-accent, rgba(255, 255, 255, .12));
+    border-radius: 6px;
+    background: var(--background-secondary, #2b2d31);
+}
+
+.vc-pnygo-gf-trimHead {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--header-primary, #f2f3f5);
+}
+
+.vc-pnygo-gf-trimTimes {
+    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-muted, #949ba4);
+    font-variant-numeric: tabular-nums;
+}
+
+.vc-pnygo-gf-trimRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.vc-pnygo-gf-trimLabel {
+    flex: 0 0 34px;
+    font-size: 12px;
+    color: var(--text-muted, #949ba4);
+}
+
+.vc-pnygo-gf-trimRange {
+    flex: 1 1 auto;
+    min-width: 0;
+    accent-color: var(--brand-experiment, #5865f2);
+    cursor: pointer;
+}
+
+.vc-pnygo-gf-trimVal {
+    flex: 0 0 44px;
+    text-align: right;
+    font-size: 12px;
+    color: var(--header-primary, #f2f3f5);
+    font-variant-numeric: tabular-nums;
+}
+
+.vc-pnygo-gf-trimBtns {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+/* ---- the card: floating hearts behind it, entrance animations ---------- */
+
+.vc-pnygo-gf-stage {
+    position: relative;
+    --vc-gf-accent: #ff4d8d;
+    --vc-gf-accent-rgb: 255, 77, 141;
+    --vc-gf-level: 0;
+}
+
+/*
+ * The side "frames" of the card. Their brightness follows the music through
+ * --vc-gf-level, which girlfriend.tsx writes from the analyser every frame.
+ */
+.vc-pnygo-gf-rail {
+    position: absolute;
+    top: 10px;
+    bottom: 10px;
+    width: 3px;
+    border-radius: 999px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .9) 50%,
+        transparent 100%
+    );
+    opacity: calc(.45 + .55 * var(--vc-gf-level, 0));
+    box-shadow:
+        0 0 calc(5px + 30px * var(--vc-gf-level, 0)) rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .75),
+        0 0 calc(14px + 60px * var(--vc-gf-level, 0)) rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .35);
+    transition: opacity .12s linear, box-shadow .12s linear;
+}
+
+.vc-pnygo-gf-rail--l { left: -7px; }
+.vc-pnygo-gf-rail--r { right: -7px; }
+
+.vc-pnygo-gf-hearts {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 14px;
+}
+
+.vc-pnygo-gf-heart {
+    position: absolute;
+    bottom: -28px;
+    font-style: normal;
+    line-height: 1;
+    color: #ff4d8d;
+    filter: drop-shadow(0 0 6px rgba(255, 77, 141, .6));
+    opacity: 0;
+    animation-name: vc-pnygo-gf-rise;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.vc-pnygo-gf-stage > .vc-pnygo-pf {
+    position: relative;
+    z-index: 1;
+    animation: vc-pnygo-gf-rise-in .55s cubic-bezier(.2, .9, .25, 1.2) both;
+}
+
+.vc-pnygo-gf-stage .vc-pnygo-pf-banner {
+    animation: vc-pnygo-gf-pan 11s ease-in-out infinite alternate;
+}
+
+.vc-pnygo-gf-stage .vc-pnygo-pf-avatarWrap {
+    animation: vc-pnygo-gf-pop .7s .08s cubic-bezier(.2, .9, .25, 1.45) both;
+}
+
+.vc-pnygo-gf-stage .vc-pnygo-pf-avatarRing {
+    animation: vc-pnygo-pf-spin 6s linear infinite, vc-pnygo-gf-ring-pulse 2.4s ease-in-out infinite;
+}
+
+.vc-pnygo-gf-stage .vc-pnygo-pf-name {
+    animation: vc-pnygo-gf-fade-up .5s .16s both;
+    text-shadow: 0 0 20px rgba(255, 77, 141, .55);
+}
+
+.vc-pnygo-gf-stage .vc-pnygo-pf-handle {
+    animation: vc-pnygo-gf-fade-up .5s .24s both;
+}
+
+.vc-pnygo-gf-stage .vc-pnygo-pf-facts {
+    animation: vc-pnygo-gf-fade-up .5s .32s both;
+}
+
+@keyframes vc-pnygo-gf-rise {
+    0% { transform: translateY(0) scale(.6) rotate(-8deg); opacity: 0; }
+    14% { opacity: .6; }
+    100% { transform: translateY(-460px) scale(1.15) rotate(14deg); opacity: 0; }
+}
+
+@keyframes vc-pnygo-gf-rise-in {
+    from { transform: translateY(18px) scale(.97); opacity: 0; }
+    to { transform: none; opacity: 1; }
+}
+
+@keyframes vc-pnygo-gf-fade-up {
+    from { transform: translateY(8px); opacity: 0; }
+    to { transform: none; opacity: 1; }
+}
+
+@keyframes vc-pnygo-gf-pop {
+    from { transform: scale(.4); opacity: 0; }
+    to { transform: none; opacity: 1; }
+}
+
+@keyframes vc-pnygo-gf-pan {
+    from { background-position: 30% 40%; }
+    to { background-position: 70% 60%; }
+}
+
+@keyframes vc-pnygo-gf-ring-pulse {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 77, 141, 0)); }
+    50% { filter: drop-shadow(0 0 12px rgba(255, 77, 141, .75)); }
+}
+
+/* ---- the song player ---------------------------------------------------- */
+
+.vc-pnygo-gf-player {
+    width: 100%;
+    max-width: 460px;
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 14px;
+    background:
+        radial-gradient(120% 140% at 0% 0%, rgba(255, 77, 141, .18), transparent 55%),
+        var(--background-secondary, #2b2d31);
+    border: 1px solid rgba(255, 77, 141, .28);
+    box-shadow: 0 6px 24px rgba(255, 77, 141, .14);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: vc-pnygo-gf-fade-up .5s .4s both;
+}
+
+.vc-pnygo-gf-playerTop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.vc-pnygo-gf-playBtn {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(145deg, #ff6ba2, #ff2e7e);
+    box-shadow: 0 4px 14px rgba(255, 46, 126, .45);
+    font-size: 14px;
+    line-height: 1;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.vc-pnygo-gf-playBtn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 18px rgba(255, 46, 126, .6);
+}
+
+.vc-pnygo-gf-playBtn:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.vc-pnygo-gf-playerMeta {
+    min-width: 0;
+    flex: 1;
+    text-align: left;
+}
+
+.vc-pnygo-gf-playerTitle {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: .4px;
+    color: var(--header-primary, #f2f3f5);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vc-pnygo-gf-playerSub {
+    font-size: 11px;
+    color: var(--text-muted, #949ba4);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.vc-pnygo-gf-beat {
+    flex: 0 0 auto;
+    display: flex;
+    color: rgba(255, 255, 255, .22);
+    transform: scale(.9);
+}
+
+.vc-pnygo-gf-beat--on {
+    color: rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .95);
+    /* no CSS loop here: the song drives it */
+    transform: scale(calc(1 + .45 * var(--vc-gf-level, 0)));
+    filter: drop-shadow(0 0 calc(3px + 12px * var(--vc-gf-level, 0)) rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .85));
+    transition: transform .1s linear, filter .12s linear;
+}
+
+/* ---- the equalizer strip: right under the data table --------------------- */
+
+.vc-pnygo-gf-eqStrip {
+    width: 100%;
+    max-width: 460px;
+    margin-top: 12px;
+    padding: 10px 12px 12px;
+    border-radius: 14px;
+    background:
+        radial-gradient(120% 140% at 50% 0%, rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .14), transparent 60%),
+        var(--background-secondary, #2b2d31);
+    border: 1px solid rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .3);
+    box-shadow: 0 6px 24px -14px var(--vc-gf-accent, #ff4d8d);
+    animation: vc-pnygo-gf-fade-up .5s .36s both;
+}
+
+.vc-pnygo-gf-eqHead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 11px;
+    line-height: 1;
+}
+
+.vc-pnygo-gf-eqLabel {
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .95);
+    text-shadow: 0 0 12px rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .5);
+}
+
+.vc-pnygo-gf-eqTime {
+    color: var(--header-primary, #f2f3f5);
+    font-variant-numeric: tabular-nums;
+    font-family: var(--font-code, "SF Mono", Consolas, monospace);
+}
+
+/* the bars: heights are written by the analyser loop, this is only the idle shape */
+.vc-pnygo-gf-eq {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    width: 100%;
+    height: 62px;
+    margin-top: 8px;
+}
+
+/* the bars: the analyser loop writes ONLY `height`. Every colour (idle or
+   played) is a plain inline gradient computed once per render in React, so
+   no filter, no keyframes and no per-frame shadow ever run — that is what
+   keeps the fps up while the strip stays neon. */
+.vc-pnygo-gf-eqBar {
+    flex: 1 1 0;
+    min-width: 2px;
+    height: 6%;
+    border-radius: 999px;
+    /* fallback — React paints the neon gradient over it right away */
+    background: rgba(255, 255, 255, .12);
+    transform-origin: bottom;
+    transition: background .3s ease, box-shadow .3s ease;
+}
+
+.vc-pnygo-gf-progress {
+    margin-top: 8px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .16);
+    box-shadow: inset 0 0 6px rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .25);
+    overflow: hidden;
+}
+
+.vc-pnygo-gf-progressFill {
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ffd6e6 0%, rgba(var(--vc-gf-accent-rgb, 255, 77, 141), 1) 100%);
+    box-shadow: 0 0 8px rgba(var(--vc-gf-accent-rgb, 255, 77, 141), .7);
+    transition: width .2s linear;
+}
