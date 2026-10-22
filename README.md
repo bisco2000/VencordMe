@@ -29,13 +29,17 @@ Vencord's identity is kept as-is inside Discord (**Settings -> Vencord**).
 ## Install
 
 1. Download **`VencordMe-Setup.exe`** from the [Releases](../../releases/latest) page.
-2. Run it. It lists every Discord install it can find (Stable / Canary / PTB) - pick one (or several)
-   with **Browse...** if your Discord lives somewhere non-standard, then choose:
+2. Run it. It lists every Discord install it can find (Stable / Canary / PTB). **Click a card
+   to target only that install** - with no card highlighted, **all** listed installs are patched
+   (the installer asks for confirmation first). Then choose:
     - **Install** - patches Discord and writes the default settings (**all 210 plugins disabled**),
     - **Install + Settings** - patches Discord and applies the bundled settings profile
       (everything enabled as configured, `pnygo` stays **disabled**),
     - **Uninstall** - restores the original `app.asar`.
 3. Restart Discord, open **Settings -> Vencord**, enable the plugins you want.
+
+> Since v1.0.1: installing on one branch only closes **that** branch's Discord processes -
+> your other Discord installs keep running.
 
 The file is unsigned, so SmartScreen may show "Windows protected your PC" ->
 **More info -> Run anyway**.
@@ -44,6 +48,18 @@ The file is unsigned, so SmartScreen may show "Windows protected your PC" ->
 
 ```powershell
 VencordMe-Setup.exe --uninstall
+```
+
+### CLI options
+
+```
+--list                     list detected Discord installs (with +OpenAsar status)
+--install [--yes] [--reset] [--with-profile]
+--uninstall [--yes]
+--openasar [--yes]         install OpenAsar (faster startup) on every detected install
+--uninstall-openasar       remove OpenAsar and restore the original app.asar
+--patch <resourcesDir>     patch one resources folder (testing)
+--unpatch <resourcesDir>   restore one resources folder (testing)
 ```
 
 ## Build from source

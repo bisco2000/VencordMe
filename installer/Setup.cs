@@ -30,6 +30,12 @@ namespace VencordMeSetup
 
         private static string overrideDataDir;
 
+        // Where new dist files come from when updating without rebuilding the exe:
+        // a folder next to the installer (update mode used by --update-dist).
+        public static string ExternalDistDir;
+
+        public const string OpenAsarUrl = "https://github.com/GooseMod/OpenAsar/releases/download/nightly/app.asar";
+
         public static string OverrideDataDir
         {
             get { return overrideDataDir; }
@@ -354,14 +360,47 @@ namespace VencordMeSetup
             return false;
         }
 
-        public static bool Close(Action<string> log)
+        // Only kill the process(s) that belong to the branches the user actually
+        // selected (or, in CLI mode, one specific install). Killing every
+        // Discord.exe / DiscordCanary.exe / DiscordPTB.exe globally was the bug:
+        // installing on one branch closed every Discord on the PC.
+        public static bool IsRunning(IEnumerable<DiscordInstall> targets)
+        {
+            if (targets == null)
+                return IsRunning();
+            foreach (DiscordInstall d in targets)
+            {
+                string proc = ProcessNameForBranch(d.Branch);
+                if (proc != null && Process.GetProcessesByName(proc).Length > 0)
+                    return true;
+            }
+            return false;
+        }
+
+        private static string ProcessNameForBranch(string branch)
+        {
+            int idx = Array.IndexOf(BranchNames, branch);
+            return idx >= 0 ? ProcessNames[idx] : null;
+        }
+
+        public static bool Close(IEnumerable<DiscordInstall> targets, Action<string> log)
         {
             List<Process> procs = new List<Process>();
-            for (int i = 0; i < ProcessNames.Length; i++)
+            List<string> names = new List<string>();
+            foreach (DiscordInstall d in targets)
+            {
+                string p = ProcessNameForBranch(d.Branch);
+                if (p != null && !names.Contains(p))
+                    names.Add(p);
+            }
+            if (names.Count == 0)
+                return true;
+
+            foreach (string name in names)
             {
                 try
                 {
-                    procs.AddRange(Process.GetProcessesByName(ProcessNames[i]));
+                    procs.AddRange(Process.GetProcessesByName(name));
                 }
                 catch
                 {
@@ -374,7 +413,7 @@ namespace VencordMeSetup
                 return true;
             }
 
-            log("Closing Discord (" + procs.Count + " process(es))...");
+            log("Closing Discord (" + procs.Count + " process(es): " + string.Join(", ", names) + ")...");
             for (int i = 0; i < procs.Count; i++)
             {
                 try { procs[i].Kill(); }
@@ -385,9 +424,9 @@ namespace VencordMeSetup
             {
                 Thread.Sleep(100);
                 bool any = false;
-                for (int i = 0; i < ProcessNames.Length; i++)
+                foreach (string name in names)
                 {
-                    if (Process.GetProcessesByName(ProcessNames[i]).Length > 0)
+                    if (Process.GetProcessesByName(name).Length > 0)
                     {
                         any = true;
                         break;
@@ -528,6 +567,86 @@ namespace VencordMeSetup
         }
     }
 
+    internal static class OpenAsar
+    {
+        public static bool IsOpenAsar(string resourcesDir)
+        {
+            try
+            {
+                string asar = Path.Combine(resourcesDir, "app.asar");
+                if (!File.Exists(asar))
+                    return false;
+                byte[] head = new byte[65536];
+                int read;
+                using (FileStream fs = File.OpenRead(asar))
+                    read = fs.Read(head, 0, head.Length);
+                return read > 0 && Encoding.ASCII.GetString(head, 0, read).Contains("OpenAsar");
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        // Download the nightly OpenAsar app.asar over the patch asar.
+        // The original app is always _app.asar (InstallOne made it), so restoring
+        // stays possible. Returns null on success, else an error string.
+        public static string Install(string resourcesDir)
+        {
+            try
+            {
+                string asar = Path.Combine(resourcesDir, "app.asar");
+                string bak = Path.Combine(resourcesDir, "_app.asar");
+                if (!File.Exists(bak))
+                {
+                    if (!File.Exists(asar))
+                        return "no app.asar in " + resourcesDir;
+                    File.Move(asar, bak);
+                }
+
+                byte[] data;
+                using (System.Net.WebClient wc = new System.Net.WebClient())
+                {
+                    data = wc.DownloadData(Payload.OpenAsarUrl);
+                }
+                if (data == null || data.Length < 1024)
+                    return "downloaded OpenAsar looks wrong (" + (data == null ? 0 : data.Length) + " bytes)";
+
+                File.WriteAllBytes(asar, data);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public static string Uninstall(string resourcesDir)
+        {
+            try
+            {
+                string asar = Path.Combine(resourcesDir, "app.asar");
+                string bak = Path.Combine(resourcesDir, "_app.asar");
+                if (!File.Exists(bak))
+                    return "no _app.asar backup in " + resourcesDir;
+
+                if (File.Exists(asar))
+                {
+                    if (Discord.IsPatchAsar(asar) || IsOpenAsar(resourcesDir))
+                        File.Delete(asar);
+                    else
+                        return "app.asar is not a patcher/OpenAsar, leaving it alone";
+                }
+                File.Move(bak, asar);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+    }
+
     internal static class Asar
     {
         private static void WriteUInt32LE(Stream s, uint value)
@@ -639,16 +758,63 @@ namespace VencordMeSetup
                 Console.WriteLine(m);
             };
 
+            bool yes = HasFlag(args, "--yes");
+            bool reset = HasFlag(args, "--reset");
+            bool withProfile = HasFlag(args, "--with-profile");
+
             if (cmd == "--list")
             {
                 List<DiscordInstall> list = Discord.Detect();
                 foreach (DiscordInstall d in list)
                 {
-                    Console.WriteLine("{0,-7} {1,-12} {2,-9} {3}", d.Branch, d.Version, d.Status, d.AppDir);
+                    string oa = OpenAsar.IsOpenAsar(d.ResourcesDir) ? " +OpenAsar" : "";
+                    Console.WriteLine("{0,-7} {1,-12} {2,-9}{3} {4}", d.Branch, d.Version, d.Status, oa, d.AppDir);
                 }
                 if (list.Count == 0)
                     Console.WriteLine("No Discord installation found.");
                 return 0;
+            }
+
+            if (cmd == "--openasar" || cmd == "--uninstall-openasar")
+            {
+                List<DiscordInstall> targets = Discord.Detect();
+                if (targets.Count == 0)
+                {
+                    Console.WriteLine("No Discord installation found.");
+                    return 1;
+                }
+
+                if (cmd == "--openasar")
+                {
+                    if (!yes && Discord.IsRunning(targets))
+                    {
+                        DialogResult r = MessageBox.Show(
+                            "VencordMe needs to close Discord to install OpenAsar.\r\n\r\nClose Discord now?",
+                            "VencordMe Setup", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (r != DialogResult.Yes)
+                        {
+                            Console.WriteLine("Aborted: Discord must be closed.");
+                            return 1;
+                        }
+                    }
+                    if (Discord.IsRunning(targets))
+                        Discord.Close(targets, log);
+                }
+
+                int ok = 0;
+                foreach (DiscordInstall d in targets)
+                {
+                    string err = cmd == "--openasar" ? OpenAsar.Install(d.ResourcesDir) : OpenAsar.Uninstall(d.ResourcesDir);
+                    if (err == null)
+                    {
+                        ok++;
+                        log(d.Branch + " " + d.Version + ": " + (cmd == "--openasar" ? "OpenAsar installed" : "OpenAsar removed"));
+                    }
+                    else
+                        log(d.Branch + " " + d.Version + "  FAILED: " + err);
+                }
+                Console.WriteLine((cmd == "--openasar" ? "OpenAsar on " : "OpenAsar removed from ") + ok + " of " + targets.Count + " installation(s).");
+                return ok == targets.Count ? 0 : 1;
             }
 
             if (cmd == "--gen-asar")
@@ -704,19 +870,22 @@ namespace VencordMeSetup
                 return 0;
             }
 
-            bool yes = HasFlag(args, "--yes");
-            bool reset = HasFlag(args, "--reset");
-            bool withProfile = HasFlag(args, "--with-profile");
-
             if (withProfile && !Payload.HasProfile)
             {
                 Console.WriteLine("This setup was built without a settings profile.");
                 return 2;
             }
 
+            List<DiscordInstall> detected = cmd == "--install" || cmd == "--uninstall" ? Discord.Detect() : null;
+            if (detected != null && detected.Count == 0)
+            {
+                Console.WriteLine("No Discord installation found.");
+                return 1;
+            }
+
             if (cmd == "--install")
             {
-                if (!yes && Discord.IsRunning())
+                if (!yes && Discord.IsRunning(detected))
                 {
                     DialogResult r = MessageBox.Show(
                         "VencordMe needs to close Discord to patch it.\r\n\r\nClose Discord now?",
@@ -727,19 +896,13 @@ namespace VencordMeSetup
                         return 1;
                     }
                 }
-                if (Discord.IsRunning())
-                    Discord.Close(log);
+                if (Discord.IsRunning(detected))
+                    Discord.Close(detected, log);
 
                 log("Data folder: " + Payload.DataDir);
                 Payload.Extract(reset, withProfile, log);
 
-                List<DiscordInstall> list = Discord.Detect();
-                if (list.Count == 0)
-                {
-                    Console.WriteLine("No Discord installation found.");
-                    return 1;
-                }
-
+                List<DiscordInstall> list = detected;
                 int ok = 0;
                 foreach (DiscordInstall d in list)
                 {
@@ -759,7 +922,7 @@ namespace VencordMeSetup
 
             if (cmd == "--uninstall")
             {
-                if (!yes && Discord.IsRunning())
+                if (!yes && Discord.IsRunning(detected))
                 {
                     DialogResult r = MessageBox.Show(
                         "VencordMe needs to close Discord to restore it.\r\n\r\nClose Discord now?",
@@ -770,16 +933,10 @@ namespace VencordMeSetup
                         return 1;
                     }
                 }
-                if (Discord.IsRunning())
-                    Discord.Close(log);
+                if (Discord.IsRunning(detected))
+                    Discord.Close(detected, log);
 
-                List<DiscordInstall> list = Discord.Detect();
-                if (list.Count == 0)
-                {
-                    Console.WriteLine("No Discord installation found.");
-                    return 1;
-                }
-
+                List<DiscordInstall> list = detected;
                 int ok = 0;
                 foreach (DiscordInstall d in list)
                 {
@@ -1231,6 +1388,12 @@ namespace VencordMeSetup
         public DiscordInstall Selected
         {
             get { return (selected >= 0 && selected < items.Count) ? items[selected] : null; }
+        }
+
+        // True when exactly one card is highlighted (user picked a specific install).
+        public bool HasSelection
+        {
+            get { return selected >= 0; }
         }
 
         public void SetItems(List<DiscordInstall> found, string selectResourcesDir)
@@ -2081,6 +2244,12 @@ namespace VencordMeSetup
             profileHint.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             root.Controls.Add(profileHint);
 
+            Label targetHint = MakeLabel(
+                "No card highlighted = ALL listed installs will be patched. Click a card to target ONLY that one.",
+                Ui.Small, Ui.Warn, Ui.Bg, 256, 448, 490, 20);
+            targetHint.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            root.Controls.Add(targetHint);
+
             // ---- pane: log ----
             busyBar = new BusyBar();
             busyBar.Location = new Point(S(256), S(462));
@@ -2403,7 +2572,16 @@ namespace VencordMeSetup
             }
 
             string verb = kind == ActionKind.Uninstall ? "uninstall" : "install";
-            if (closeBox.Checked && Discord.IsRunning())
+            if (!list.HasSelection && installs.Count > 1)
+            {
+                DialogResult r = MessageBox.Show(
+                    "No installation is selected.\r\n\r\nThe action will be applied to ALL " + installs.Count +
+                    " listed installations.\r\n\r\nContinue?",
+                    "VencordMe Setup", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (r != DialogResult.Yes)
+                    return;
+            }
+            if (closeBox.Checked && Discord.IsRunning(installs))
             {
                 DialogResult r = MessageBox.Show(
                     "Discord is currently running.\r\n\r\nVencordMe needs it closed before it can " + verb + ".\r\n\r\nClose Discord now?",
@@ -2467,7 +2645,7 @@ namespace VencordMeSetup
         private void Do(ActionKind kind, List<DiscordInstall> installs, RunOptions opts)
         {
             if (opts.CloseDiscord)
-                Discord.Close(Log);
+                Discord.Close(installs, Log);
 
             if (kind == ActionKind.Install || kind == ActionKind.InstallWithSettings)
             {
@@ -2501,25 +2679,26 @@ namespace VencordMeSetup
 
                 SetStatus("Installed on " + ok + " of " + installs.Count + " installation(s).");
 
-                bool askLaunch = false;
-                for (int i = 0; i < installs.Count; i++)
+                // Launch the branch we actually patched, not whatever came first.
+                if (ok > 0 && !IsDisposed && IsHandleCreated)
                 {
-                    if (installs[i].IsOurs)
+                    DiscordInstall firstPatched = null;
+                    for (int i = 0; i < installs.Count; i++)
                     {
-                        askLaunch = true;
-                        break;
+                        if (installs[i].IsOurs || installs[i].Status == "Patched")
+                        {
+                            firstPatched = installs[i];
+                            break;
+                        }
                     }
-                }
-
-                if (askLaunch && !IsDisposed && IsHandleCreated)
-                {
+                    DiscordInstall launchTarget = firstPatched ?? installs[0];
                     BeginInvoke((MethodInvoker)delegate
                     {
                         DialogResult r = MessageBox.Show(
-                            "VencordMe was installed successfully.\r\n\r\nStart Discord now?",
+                            "VencordMe was installed successfully.\r\n\r\nStart " + launchTarget.Branch + " now?",
                             "VencordMe Setup", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (r == DialogResult.Yes)
-                            Discord.Launch();
+                            Discord.Launch(launchTarget);
                     });
                 }
             }
