@@ -10,7 +10,7 @@ import { addContextMenuPatch, NavContextMenuPatchCallback, removeContextMenuPatc
 import ErrorBoundary from "@components/ErrorBoundary";
 import { Logger } from "@utils/Logger";
 import { OptionType } from "@utils/types";
-import { Button, Menu, showToast, Toasts, UserProfileStore,UserStore } from "@webpack/common";
+import { Button, Menu, showToast, UserProfileStore,UserStore } from "@webpack/common";
 
 import { getOfficialBadge, refreshDirectoryCatalog } from "./badges";
 import { HeaderOverlay, openEditProfileModal } from "./components/ProfileEditOverlay";
@@ -44,7 +44,7 @@ function ResetEverythingButton() {
             color={Button.Colors.RED}
             onClick={async () => {
                 await resetEverything();
-                showToast("EditProfile: all local overrides removed", Toasts.Type.SUCCESS);
+                showToast({ text: "EditProfile: all local overrides removed", variant: "success" });
             }}
         >
             Reset everything
@@ -217,7 +217,7 @@ const userContextMenuPatch: NavContextMenuPatchCallback = (children, props) => {
                 label="Reset Profile (local only)"
                 action={() => {
                     resetAll(userId);
-                    showToast("EditProfile: real profile restored", Toasts.Type.SUCCESS);
+                    showToast({ text: "EditProfile: real profile restored", variant: "success" });
                 }}
             />
         );

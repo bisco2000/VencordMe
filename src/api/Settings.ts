@@ -26,8 +26,6 @@ import plugins from "~plugins";
 
 const logger = new Logger("Settings");
 
-export type ThemeActivationMode = "always" | "light" | "dark";
-
 export interface SettingsPluginUiElement {
     enabled: boolean;
     // TODO
@@ -41,22 +39,15 @@ export type SettingsPluginUiElements = {
 
 export interface Settings {
     autoUpdate: boolean;
-    autoUpdateNotification: boolean;
+    autoUpdateNotification: boolean,
     useQuickCss: boolean;
     eagerPatches: boolean;
     enabledThemes: string[];
-    enabledThemeLinks: string[];
-    enableOnlineThemes: boolean;
-    pinnedThemes: string[];
-    themeNames: Record<string, string>;
-    themeActivationModes: Partial<Record<string, ThemeActivationMode>>;
     enableReactDevtools: boolean;
     themeLinks: string[];
-    mainWindowFrameless: boolean;
     frameless: boolean;
     transparent: boolean;
     winCtrlQ: boolean;
-    windowsMaterial: "none" | "auto" | "mica" | "acrylic" | "tabbed";
     macosVibrancyStyle:
     | "content"
     | "fullscreen-ui"
@@ -71,8 +62,9 @@ export interface Settings {
     | "under-page"
     | "window"
     | undefined;
+    windowsMaterial: "none" | "mica" | "tabbed" | "acrylic";
     disableMinSize: boolean;
-    winNativeTitleBar: boolean;
+    nativeTitleBar: boolean;
     plugins: {
         [plugin: string]: {
             enabled: boolean;
@@ -90,7 +82,6 @@ export interface Settings {
         timeout: number;
         position: "top-right" | "bottom-right";
         useNative: "always" | "never" | "not-focused";
-        missed: boolean;
         logLimit: number;
     };
 
@@ -99,14 +90,6 @@ export interface Settings {
         url: string;
         settingsSync: boolean;
         settingsSyncVersion: number;
-    };
-
-    ignoreResetWarning: boolean;
-
-    userCssVars: {
-        [themeId: string]: {
-            [varName: string]: string;
-        };
     };
 }
 
@@ -117,20 +100,14 @@ const DefaultSettings: Settings = {
     themeLinks: [],
     eagerPatches: false, // Eagerly patching no longer works due to module factories with the same id being able to have different sources now.
     enabledThemes: [],
-    enabledThemeLinks: [],
-    enableOnlineThemes: true,
-    pinnedThemes: [],
-    themeNames: {},
-    themeActivationModes: {},
     enableReactDevtools: false,
-    mainWindowFrameless: false,
     frameless: false,
     transparent: false,
     winCtrlQ: false,
-    windowsMaterial: "none",
     macosVibrancyStyle: undefined,
+    windowsMaterial: "none",
     disableMinSize: false,
-    winNativeTitleBar: false,
+    nativeTitleBar: false,
     plugins: {},
 
     uiElements: {
@@ -142,20 +119,15 @@ const DefaultSettings: Settings = {
         timeout: 5000,
         position: "bottom-right",
         useNative: "not-focused",
-        missed: true,
         logLimit: 50
     },
 
     cloud: {
         authenticated: false,
-        url: "https://cloud.equicord.org/",
+        url: "https://api.vencord.dev/",
         settingsSync: false,
         settingsSyncVersion: 0
-    },
-
-    ignoreResetWarning: false,
-
-    userCssVars: {}
+    }
 };
 
 const settings = !IS_REPORTER ? VencordNative.settings.get() : {} as Settings;
@@ -181,7 +153,7 @@ export const SettingsStore = new SettingsStoreClass(settings, {
         if (path.startsWith("plugins.")) {
             const plugin = path.slice("plugins.".length);
             if (plugin in plugins) {
-                const setting = plugins[plugin].options?.[key];
+                const setting = plugins[plugin].settings?.def[key];
                 if (!setting) return v;
 
                 if ("default" in setting)
@@ -211,7 +183,7 @@ if (!IS_REPORTER) {
  * Same as {@link Settings} but unproxied. You should treat this as readonly,
  * as modifying properties on this will not save to disk or call settings
  * listeners.
- * WARNING: default values specified in plugin.options will not be ensured here. In other words,
+ * WARNING: default values specified in plugin.settings will not be ensured here. In other words,
  * settings for which you specified a default value may be uninitialised. If you need proper
  * handling for default values, use {@link Settings}
  */
@@ -275,79 +247,14 @@ export function migratePluginSettings(name: string, ...oldNames: string[]) {
     }
 }
 
-export function migratePluginSetting(pluginName: string, newSetting: string, oldSetting: string) {
+export function migratePluginSetting(pluginName: string, oldSetting: string, newSetting: string) {
     const settings = SettingsStore.plain.plugins[pluginName];
     if (!settings) return;
 
     if (!Object.hasOwn(settings, oldSetting) || Object.hasOwn(settings, newSetting)) return;
 
-    logger.info(`Migrating plugin setting from ${oldSetting} to ${newSetting} on ${pluginName}`);
     settings[newSetting] = settings[oldSetting];
     delete settings[oldSetting];
-    SettingsStore.markAsChanged();
-}
-
-export function migratePluginToSettings(deleteOldSettings: boolean, newName: string, oldName: string, ...settingNames: string[]) {
-    const { plugins } = SettingsStore.plain;
-    const newPlugin = plugins[newName];
-    const oldPlugin = plugins[oldName];
-
-    if (newPlugin && oldPlugin?.enabled) {
-        for (const settingName of settingNames) {
-            logger.info(`Migrating plugin to setting from old name ${oldName} to ${newName} as ${settingName}`);
-            newPlugin[settingName] = true;
-        }
-
-        newPlugin.enabled = true;
-        if (deleteOldSettings) delete plugins[oldName];
-        SettingsStore.markAsChanged();
-    }
-}
-
-export function migrateSettingToPlugin(newName: string, oldName: string, settingName: string) {
-    const { plugins } = SettingsStore.plain;
-    const newPlugin = plugins[newName];
-    const oldPlugin = plugins[oldName];
-
-    if (newPlugin && oldPlugin?.enabled && oldPlugin?.[settingName]) {
-        logger.info(`Migrating setting ${settingName} from ${oldName} to seperate plugin ${newName}`);
-        delete oldPlugin[settingName];
-        newPlugin.enabled = true;
-        SettingsStore.markAsChanged();
-    }
-}
-
-export function migrateSettingsFromPlugin(newPlugin: string, oldPlugin: string, ...settings: string[]) {
-    const { plugins } = SettingsStore.plain;
-    const oldSettings = plugins[oldPlugin];
-    const newSettings = plugins[newPlugin];
-    if (!oldSettings || !newSettings) return;
-
-    for (const setting of settings) {
-        if (!Object.hasOwn(oldSettings, setting)) continue;
-        if (Object.hasOwn(newSettings, setting)) continue;
-
-        logger.info(`Migrating plugin setting "${setting}" from ${oldPlugin} to ${newPlugin}`);
-
-        newSettings[setting] = oldSettings[setting];
-        delete oldSettings[setting];
-    }
-
-    SettingsStore.markAsChanged();
-}
-
-export function migrateOldSettingToNewPlugin(newPlugin: string, newSetting: string, oldPlugin: string, oldSetting: string,) {
-    const { plugins } = SettingsStore.plain;
-    const oldSettings = plugins[oldPlugin];
-    const newSettings = plugins[newPlugin];
-    if (!oldSettings || !newSettings) return;
-
-    if (!Object.hasOwn(oldSettings, oldSetting) || Object.hasOwn(newSettings, newSetting)) return;
-
-    logger.info(`Migrating plugin setting "${oldSetting}" from ${oldPlugin} to "${newSetting}" on ${newPlugin}`);
-
-    newSettings[newSetting] = oldSettings[oldSetting];
-    delete oldSettings[oldSetting];
     SettingsStore.markAsChanged();
 }
 
@@ -356,7 +263,13 @@ export function definePluginSettings<
     Checks extends SettingsChecks<Def>,
     PrivateSettings extends object = {}
 >(def: Def, checks?: Checks) {
-    const definedSettings: DefinedSettings<Def, Checks, PrivateSettings> = {
+    if (checks) {
+        for (const [name, check] of Object.entries(checks)) {
+            Object.assign(def[name], check);
+        }
+    }
+
+    const definedSettings: DefinedSettings<Def, PrivateSettings> = {
         get store() {
             if (!definedSettings.pluginName) throw new Error("Cannot access settings before plugin is initialized");
             return Settings.plugins[definedSettings.pluginName] as any;
@@ -371,11 +284,10 @@ export function definePluginSettings<
                 : [`plugins.${definedSettings.pluginName}.*`]
         ) as UseSettings<Settings>[]).plugins[definedSettings.pluginName] as any,
         def,
-        checks: checks ?? {} as any,
         pluginName: "",
 
         withPrivateSettings<T extends object>() {
-            return this as DefinedSettings<Def, Checks, T>;
+            return this as DefinedSettings<Def, T>;
         }
     };
 

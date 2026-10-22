@@ -9,9 +9,8 @@ import { hasAnyVisibleSettings, isPluginEnabled, pluginRequiresRestart, startDep
 import { Settings } from "@api/Settings";
 import { CogWheel, InfoIcon } from "@components/Icons";
 import { AddonCard } from "@components/settings/AddonCard";
-import { getPluginDisplayDescription, getPluginDisplayName } from "@plugins/arabicUi/engine/pluginStrings";
 import { Plugin } from "@utils/types";
-import { React, showToast, Toasts } from "@webpack/common";
+import { React, showToast } from "@webpack/common";
 
 import { cl, logger } from ".";
 import { openPluginModal } from "./PluginModal";
@@ -68,9 +67,7 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
             settings.enabled = false;
 
             const msg = `Error while ${wasEnabled ? "stopping" : "starting"} plugin ${plugin.name}`;
-            showToast(msg, Toasts.Type.FAILURE, {
-                position: Toasts.Position.BOTTOM,
-            });
+            showToast({ text: msg, variant: "critical", position: "bottom" });
 
             return;
         }
@@ -80,8 +77,8 @@ export function PluginCard({ plugin, disabled, onRestartNeeded, onMouseEnter, on
 
     return (
         <AddonCard
-            name={getPluginDisplayName(plugin)}
-            description={getPluginDisplayDescription(plugin)}
+            name={plugin.name}
+            description={plugin.description}
             isNew={isNew}
             enabled={isEnabled()}
             setEnabled={toggleEnabled}

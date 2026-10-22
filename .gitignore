@@ -2,7 +2,6 @@ dist
 node_modules
 
 *.exe
-!VencordMe-Setup.exe
 vencord_installer
 
 .idea
@@ -20,11 +19,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 *.tsbuildinfo
 
-# personal settings profile (embedded in VencordMe-Setup.exe, kept local)
-installer/payload/settings.mine.json
-
-scripts/arabicUi/_plugin_strings.json
-src/plugins/arabicUi/locales/discord/en-text/_dedupe_report.json
+src/userplugins
 
 ExtensionCache/
 /settings

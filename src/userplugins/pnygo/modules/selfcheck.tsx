@@ -10,7 +10,7 @@ import ErrorBoundary from "@components/ErrorBoundary";
 import { OptionType } from "@utils/types";
 import {
     ChannelStore, FluxDispatcher, Forms, Menu, MessageStore, Modal,
-    openModal, React, showToast, Toasts, UserStore,
+    openModal, React, showToast, UserStore,
 } from "@webpack/common";
 import { getBuildNumber } from "@webpack/patcher";
 
@@ -261,14 +261,14 @@ async function runVencordUpdate(setBusy: (b: boolean) => void, refresh: () => vo
             if (!rebuildRes.ok) throw new Error(String(rebuildRes.error));
         }
 
-        showToast("Vencord updated successfully. Restart to apply.", Toasts.Type.SUCCESS);
+        showToast({ text: "Vencord updated successfully. Restart to apply.", variant: "success" });
         showNotification({
             title: "pnygo — SelfCheck",
             body: "Vencord was updated. Restart Discord to load the new build.",
             noPersist: true,
         });
     } catch (e) {
-        showToast(`Update failed: ${String(e)}`, Toasts.Type.FAILURE);
+        showToast({ text: `Update failed: ${String(e)}`, variant: "critical" });
     } finally {
         setBusy(false);
         refresh();

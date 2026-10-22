@@ -74,15 +74,13 @@ if (!IS_VANILLA) {
                 return;
             }
 
-            const { frameless, winNativeTitleBar, disableMinSize, transparent, macosVibrancyStyle, windowsMaterial } = settings;
+            const { nativeTitleBar, disableMinSize, transparent, macosVibrancyStyle, windowsMaterial } = settings;
 
             const original = options.webPreferences.preload;
             options.webPreferences.preload = join(__dirname, "preload.js");
             options.webPreferences.sandbox = false;
 
-            if (frameless) {
-                options.frame = false;
-            } else if (process.platform === "win32" && winNativeTitleBar) {
+            if (nativeTitleBar) {
                 delete options.frame;
             }
 
@@ -133,7 +131,7 @@ if (!IS_VANILLA) {
         s.set("DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING", true);
     });
 
-    process.env.DATA_DIR = join(app.getPath("userData"), "..", "VencordMe");
+    process.env.DATA_DIR = join(app.getPath("userData"), "..", "Vencord");
 } else {
     console.log("[Vencord] Running in vanilla mode. Not loading Vencord");
 }

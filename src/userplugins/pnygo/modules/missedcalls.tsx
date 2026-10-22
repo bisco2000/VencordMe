@@ -9,7 +9,7 @@ import "./missedcalls.css";
 import { addContextMenuPatch, NavContextMenuPatchCallback, removeContextMenuPatch } from "@api/ContextMenu";
 import { Logger } from "@utils/Logger";
 import { OptionType } from "@utils/types";
-import { ChannelStore, Menu, Modal, React, showToast, Toasts, UserStore } from "@webpack/common";
+import { ChannelStore, Menu, Modal, React, showToast, UserStore } from "@webpack/common";
 
 import { hit } from "./probe";
 import {
@@ -588,7 +588,7 @@ export function clearAllCalls(silent = false): number {
     document.querySelectorAll<HTMLElement>(`[${ROW_ATTR}]`).forEach(el => el.remove());
     document.querySelectorAll<HTMLElement>(`[${GROUP_ATTR}]`).forEach(el => el.remove());
     stopWatcher();
-    if (!silent) showToast(`Removed ${removed} call row(s)`, Toasts.Type.SUCCESS);
+    if (!silent) showToast({ text: `Removed ${removed} call row(s)`, variant: "success" });
     return removed;
 }
 
@@ -601,14 +601,14 @@ function toastFor(kind: CallKind): string {
 /** Quick add from a message's right-click menu (no dialog). */
 function quickAddMessage(message: any, kind: CallKind, side: CallSide = "above"): void {
     upsertCall(callFromMessage(message, kind, side));
-    showToast(toastFor(kind), Toasts.Type.SUCCESS);
+    showToast({ text: toastFor(kind), variant: "success" });
 }
 
 /** Quick add from the conversation's right-click menu — needs no messages. */
 function quickAddChannel(channelId: string, kind: CallKind): void {
     const call = callForChannel(channelId);
     upsertCall({ ...call, kind });
-    showToast(toastFor(kind), Toasts.Type.SUCCESS);
+    showToast({ text: toastFor(kind), variant: "success" });
 }
 
 // ---------------------------------------------------------------------------
@@ -655,7 +655,7 @@ function CallEditorPanel(props: any) {
             ts: parsedTs ?? base.ts,
             name: name.trim() || "Them",
         });
-        showToast("Call saved in the chat (local only)", Toasts.Type.SUCCESS);
+        showToast({ text: "Call saved in the chat (local only)", variant: "success" });
         onClose();
     };
 
@@ -873,11 +873,7 @@ const messageContextMenuPatch: NavContextMenuPatchCallback = (children, props) =
         const move = (side: CallSide) => {
             if (!inChannel) return;
             if (moveCall(inChannel, anchor, side)) {
-                showToast(
-                    side === "below" ? "Call moved below this message (local only)"
-                        : "Call moved above this message (local only)",
-                    Toasts.Type.SUCCESS
-                );
+                showToast({ text: side === "below" ? "Call moved below this message (local only)" : "Call moved above this message (local only)", variant: "success" });
             }
         };
 
@@ -914,7 +910,7 @@ const messageContextMenuPatch: NavContextMenuPatchCallback = (children, props) =
                         label={here.length > 1 ? `Remove the ${here.length} calls here` : "Remove this call"}
                         action={() => {
                             for (const call of here) removeCall(rowKey(call));
-                            showToast(`Removed ${here.length} call row(s)`, Toasts.Type.SUCCESS);
+                            showToast({ text: `Removed ${here.length} call row(s)`, variant: "success" });
                         }}
                     />
                 ) : null}
@@ -960,7 +956,7 @@ const channelContextMenuPatch: NavContextMenuPatchCallback = (children, props) =
                         label="Move the newest call to the end of this chat"
                         action={() => {
                             moveCallTo(channelId, ANCHOR_BOTTOM);
-                            showToast("Call moved (local only)", Toasts.Type.SUCCESS);
+                            showToast({ text: "Call moved (local only)", variant: "success" });
                         }}
                     />
                 ) : null}
@@ -977,7 +973,7 @@ const channelContextMenuPatch: NavContextMenuPatchCallback = (children, props) =
                         label={all.length > 1 ? `Remove the ${all.length} calls in this chat` : "Remove this call"}
                         action={() => {
                             for (const call of all) removeCall(rowKey(call));
-                            showToast(`Removed ${all.length} call row(s)`, Toasts.Type.SUCCESS);
+                            showToast({ text: `Removed ${all.length} call row(s)`, variant: "success" });
                         }}
                     />
                 ) : null}

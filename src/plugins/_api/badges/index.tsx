@@ -31,21 +31,9 @@ import { Logger } from "@utils/Logger";
 import { Margins } from "@utils/margins";
 import { shouldShowContributorBadge } from "@utils/misc";
 import definePlugin from "@utils/types";
-import { ContextMenuApi, Forms, Menu, Modal, openModal, Toasts, UserStore } from "@webpack/common";
+import { ContextMenuApi, Forms, Menu, Modal, openModal, showToast, UserStore } from "@webpack/common";
 
-const CONTRIBUTOR_BADGE = "https://cdn.discordapp.com/emojis/1092089799109775453.png?size=64";
-
-type SpecialBadgeData = {
-    tooltip: string;
-    badge: string;
-};
-
-type BadgesData = Record<
-    string,
-    Array<Record<"tooltip" | "badge", string>>
-> & {
-    special?: Record<string, SpecialBadgeData>;
-};
+const CONTRIBUTOR_BADGE = "https://cdn.discordapp.com/emojis/1562267648857997356.webp?size=240";
 
 const ContributorBadge: ProfileBadge = {
     id: "vencord_contributor_badge",
@@ -56,15 +44,14 @@ const ContributorBadge: ProfileBadge = {
     onClick: (_, { userId }) => openContributorModal(UserStore.getUser(userId))
 };
 
-let DonorBadges = {} as BadgesData;
+let DonorBadges = {} as Record<string, Array<Record<"tooltip" | "badge", string>>>;
 
 async function loadBadges(noCache = false) {
     const init = {} as RequestInit;
-
     if (noCache)
         init.cache = "no-cache";
 
-    DonorBadges = await fetch("https://viciouscal.github.io/badges/badges.json", init)
+    DonorBadges = await fetch("https://badges.vencord.dev/badges.json", init)
         .then(r => r.json());
 }
 
@@ -102,7 +89,6 @@ export default definePlugin({
     description: "API to add badges to users",
     authors: [Devs.Megu, Devs.Ven, Devs.TheSun],
     required: true,
-
     patches: [
         {
             find: "#{intl::PROFILE_USER_BADGES}",
@@ -145,11 +131,7 @@ export default definePlugin({
     toolboxActions: {
         async "Refetch Badges"() {
             await loadBadges(true);
-            Toasts.show({
-                id: Toasts.genId(),
-                message: "Successfully refetched badges!",
-                type: Toasts.Type.SUCCESS
-            });
+            showToast({ text: "Successfully refetched badges!", variant: "success" });
         }
     },
 
@@ -170,20 +152,7 @@ export default definePlugin({
         if (!profile) return [];
 
         try {
-            const badges = _getBadges(profile);
-
-            const specialBadge = DonorBadges.special?.[profile.userId];
-
-            if (specialBadge) {
-                badges.push({
-                    id: `vc_special_badge_${profile.userId}`,
-                    description: specialBadge.tooltip,
-                    iconSrc: specialBadge.badge,
-                    position: BadgePosition.START
-                });
-            }
-
-            return badges;
+            return _getBadges(profile);
         } catch (e) {
             new Logger("BadgeAPI#getBadges").error(e);
             return [];
@@ -194,6 +163,7 @@ export default definePlugin({
         const Component = badge.component!;
         return <Component {...badge} />;
     }, { noop: true }),
+
 
     getBadgeMouseEventHandlers(badge: ProfileBadge & BadgeUserArgs) {
         const handlers = {} as Record<string, (e: React.MouseEvent) => void>;

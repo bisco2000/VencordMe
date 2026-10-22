@@ -22,9 +22,9 @@ export const VENCORD_GUILD_ID = "1015060230222131221";
 export const DONOR_ROLE_ID = "1042507929485586532";
 export const CONTRIB_ROLE_ID = "1026534353167208489";
 export const REGULAR_ROLE_ID = "1026504932959977532";
-export const SUPPORT_CHANNEL_ID = "1460651683179925585";
-export const SUPPORT_CATEGORY_ID = "1460651025181442058";
-export const KNOWN_ISSUES_CHANNEL_ID = "1460651508080050451";
+export const SUPPORT_CHANNEL_ID = "1026515880080842772";
+export const SUPPORT_CATEGORY_ID = "1108135649699180705";
+export const KNOWN_ISSUES_CHANNEL_ID = "1257025907625951423";
 
 const platform = navigator.platform.toLowerCase();
 export const IS_WINDOWS = platform.startsWith("win");
@@ -50,40 +50,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     Ven: {
         name: "V",
         id: 343383572805058560n
-    },
-    viciouscal: {
-        name: "viciouscal",
-        id: 883820228360929320n
-    },
-    atb: {
-    name: "at.b",
-    id: 297283663991668738n,
-    badge: false
-    },
-    Yazan:{
-        name: "Yazan",
-        id: 1098240987983269918n
-    },
-    mar: {
-        name: "mar",
-        id: 672868164161372171n
-    },
-    nyiq: {
-        name: "nyiq",
-        id: 372557867300945921n
-    },
-    unknown: {
-        name: "unknown",
-        id: 400538965041741825n,
-        badge: false
-    },
-    coll: {
-        name: "stealingweed",
-        id: 1058459294640648192n
-    },
-    Phzzy: {
-        name: "pluckerpilple",
-        id: 375402345971974147n
     },
     Apexo: {
         name: "Apexo",
@@ -126,10 +92,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "Samu",
         id: 702973430449832038n,
     },
-        MaxHerbold: {
-        name: "MaxHerbold",
-        id: 1189527130611138663n
-    },
     Nyako: {
         name: "nyako",
         id: 118437263754395652n
@@ -137,10 +99,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     MaiKokain: {
         name: "Mai",
         id: 722647978577363026n
-    },
-    KrystalSkull: {
-        name: "krystalskullofficial",
-        id: 929208515883569182n
     },
     amy: {
         name: "Amy",
@@ -170,26 +128,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "mantikafasi",
         id: 287555395151593473n
     },
-        desu: {
-        name: "desu",
-        id: 526331463709360141n
-    },
-        Fres: {
-        name: "fres",
-        id: 843448897737064448n
-    },
-        mochienya: {
-        name: "mochie",
-        id: 1043599230247374869n
-    },
-        Etorix: {
-        name: "Etorix",
-        id: 94597845868355584n
-    },
-        Drag: {
-        name: "dragalt_",
-        id: 1189903210564038697n
-    },
     Xinto: {
         name: "Xinto",
         id: 423915768191647755n
@@ -202,14 +140,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "DustyAngel47",
         id: 714583473804935238n
     },
-    keircn: {
-        name: "Key",
-        id: 1230319937155760131n
-    },
-    zoodogood: {
-        name: "zoodogood",
-        id: 921403577539387454n
-    },
     BanTheNons: {
         name: "BanTheNons",
         id: 460478012794863637n
@@ -218,18 +148,9 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "BigDuck",
         id: 1024588272623681609n
     },
-        MrDiamond: {
-        name: "MrDiamond",
-        id: 523338295644782592n
-    },
     AverageReactEnjoyer: {
         name: "Average React Enjoyer",
         id: 1004904120056029256n
-    },
-    koish1: {
-        name: "koish1",
-        id: 291089948709486593n,
-        badge: false,
     },
     adryd: {
         name: "adryd",
@@ -242,10 +163,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     afn: {
         name: "afn",
         id: 420043923822608384n
-    },
-    Darxoon: {
-        name: "Darxoon",
-        id: 409745838898937866n
     },
     KraXen72: {
         name: "KraXen72",
@@ -302,10 +219,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     captain: {
         name: "Captain",
         id: 347366054806159360n
-    },
-        Cortex: {
-        name: "Cortex",
-        id: 913205935319691335n
     },
     nick: {
         name: "nick",
@@ -524,10 +437,6 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "Noxillio",
         id: 138616536502894592n,
     },
-        neoarz: {
-        name: "neoarz",
-        id: 218675193592283137n
-    },
     Kyuuhachi: {
         name: "Kyuuhachi",
         id: 236588665420251137n,
@@ -692,6 +601,10 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "jamesbt365",
         id: 158567567487795200n,
     },
+    Darxoon: {
+        name: "Darxoon",
+        id: 409745838898937866n
+    },
     samsam: {
         name: "samsam",
         id: 400482410279469056n,
@@ -699,6 +612,11 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     Cootshk: {
         name: "Cootshk",
         id: 921605971577548820n
+    },
+    koish1: {
+        name: "koish1",
+        id: 291089948709486593n,
+        badge: false,
     },
     thororen: {
         name: "thororen",
@@ -748,6 +666,10 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "yuna0x0",
         id: 213656926414831616n
     },
+    scattagain: {
+        name: "Amelia",
+        id: 1098234477626544180n
+    },
     Davri: {
         name: "Davri",
         id: 457579346282938368n
@@ -755,7 +677,93 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     Kaede: {
         name: "Kaede",
         id: 1492642701320126504n
-    }
+    },
+    c0nnorgg: {
+        name: "c0nnorgg",
+        id: 1088882977985003620n,
+    },
+    f3tch: {
+        name: "f3tch",
+        id: 1016388460929626174n
+    },
+    imnotplayinginreallife: {
+        name: "I'm not playing in real life",
+        id: 841939724306087986n
+    },
+    atb: {
+    name: "at.b",
+    id: 297283663991668738n,
+    badge: false
+    },
+    coll: {
+    name: "stealingweed",
+    id: 1058459294640648192n
+    },
+    Cortex: {
+    name: "Cortex",
+    id: 913205935319691335n
+    },
+    desu: {
+    name: "desu",
+    id: 526331463709360141n
+    },
+    Drag: {
+    name: "dragalt_",
+    id: 1189903210564038697n
+    },
+    Etorix: {
+    name: "Etorix",
+    id: 94597845868355584n
+    },
+    Fres: {
+    name: "fres",
+    id: 843448897737064448n
+    },
+    keircn: {
+    name: "Key",
+    id: 1230319937155760131n
+    },
+    KrystalSkull: {
+    name: "krystalskullofficial",
+    id: 929208515883569182n
+    },
+    mar: {
+    name: "mar",
+    id: 672868164161372171n
+    },
+    mochienya: {
+    name: "mochie",
+    id: 1043599230247374869n
+    },
+    neoarz: {
+    name: "neoarz",
+    id: 218675193592283137n
+    },
+    nyiq: {
+    name: "nyiq",
+    id: 372557867300945921n
+    },
+    Phzzy: {
+    name: "pluckerpilple",
+    id: 375402345971974147n
+    },
+    viciouscal: {
+    name: "viciouscal",
+    id: 883820228360929320n
+    },
+    Yazan: {
+    name: "Yazan",
+    id: 1098240987983269918n
+    },
+    zoodogood: {
+    name: "zoodogood",
+    id: 921403577539387454n
+    },
+    unknown: {
+    name: "unknown",
+    id: 400538965041741825n,
+    badge: false
+    },
 } satisfies Record<string, Dev>);
 
 // iife so #__PURE__ works correctly

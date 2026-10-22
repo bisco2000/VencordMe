@@ -17,7 +17,6 @@ import {
     React,
     showToast,
     TextInput,
-    Toasts,
     useEffect,
     useMemo,
     useRef,
@@ -59,7 +58,7 @@ const settings = definePluginSettings({
             settings.store.hash = undefined;
             settings.store.salt = undefined;
             settings.store.iterations = undefined;
-            showToast("Code type changed. Set a new passcode.", Toasts.Type.MESSAGE);
+            showToast({ text: "Code type changed. Set a new passcode.", variant: "default" });
         }
     },
     autoLock: {
@@ -164,18 +163,18 @@ function PasscodeSettings() {
 
     const save = async () => {
         const error = validatePasscode(first);
-        if (error) return showToast(error, Toasts.Type.FAILURE);
-        if (first !== second) return showToast("The passcodes do not match.", Toasts.Type.FAILURE);
+        if (error) return showToast({ text: error, variant: "critical" });
+        if (first !== second) return showToast({ text: "The passcodes do not match.", variant: "critical" });
 
         setBusy(true);
         try {
             await setPasscode(first);
             setFirst("");
             setSecond("");
-            showToast("Passcode saved securely.", Toasts.Type.SUCCESS);
+            showToast({ text: "Passcode saved securely.", variant: "success" });
         } catch (error) {
             logger.error("Failed to save passcode", error);
-            showToast("Could not save the passcode.", Toasts.Type.FAILURE);
+            showToast({ text: "Could not save the passcode.", variant: "critical" });
         } finally {
             setBusy(false);
         }
@@ -383,7 +382,7 @@ function unlock(): void {
 function lock(): void {
     if (settings.store.locked && overlayElement) return;
     if (!settings.store.hash) {
-        showToast("Set a passcode in PasscodeLock settings first.", Toasts.Type.FAILURE);
+        showToast({ text: "Set a passcode in PasscodeLock settings first.", variant: "critical" });
         return;
     }
 

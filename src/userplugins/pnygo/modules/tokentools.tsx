@@ -6,7 +6,7 @@
 
 import { copyWithToast } from "@utils/discord";
 import { findByPropsLazy } from "@webpack";
-import { showToast, Toasts } from "@webpack/common";
+import { showToast } from "@webpack/common";
 
 import { Icons, TitlebarButton } from "./ui";
 
@@ -19,10 +19,10 @@ function copyOwnToken() {
         if (typeof token === "string" && token.length > 0) {
             copyWithToast(token, "Your Discord token copied");
         } else {
-            showToast("Could not read your token", Toasts.Type.FAILURE);
+            showToast({ text: "Could not read your token", variant: "critical" });
         }
     } catch {
-        showToast("Could not read your token", Toasts.Type.FAILURE);
+        showToast({ text: "Could not read your token", variant: "critical" });
     }
 }
 

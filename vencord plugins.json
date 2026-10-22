@@ -1,0 +1,1546 @@
+{
+    "settings": {
+        "autoUpdate": false,
+        "autoUpdateNotification": true,
+        "useQuickCss": true,
+        "themeLinks": [],
+        "eagerPatches": false,
+        "enabledThemes": [],
+        "enableReactDevtools": false,
+        "frameless": false,
+        "transparent": false,
+        "winCtrlQ": false,
+        "disableMinSize": false,
+        "winNativeTitleBar": false,
+        "plugins": {
+            "FunnyButton": {
+                "enabled": true
+            },
+            "ChatInputButtonAPI": {
+                "enabled": true
+            },
+            "CommandsAPI": {
+                "enabled": true
+            },
+            "DynamicImageModalAPI": {
+                "enabled": true
+            },
+            "MemberListDecoratorsAPI": {
+                "enabled": true
+            },
+            "MessageAccessoriesAPI": {
+                "enabled": true
+            },
+            "MessageDecorationsAPI": {
+                "enabled": true
+            },
+            "MessageEventsAPI": {
+                "enabled": true
+            },
+            "MessagePopoverAPI": {
+                "enabled": true
+            },
+            "MessageUpdaterAPI": {
+                "enabled": true
+            },
+            "ServerListAPI": {
+                "enabled": true
+            },
+            "UserSettingsAPI": {
+                "enabled": true
+            },
+            "AccountPanelServerProfile": {
+                "enabled": true,
+                "prioritizeServerProfile": true
+            },
+            "AlwaysAnimate": {
+                "enabled": false
+            },
+            "AlwaysExpandRoles": {
+                "enabled": false
+            },
+            "AlwaysTrust": {
+                "enabled": false
+            },
+            "AnonymiseFileNames": {
+                "enabled": true,
+                "anonymiseByDefault": true,
+                "method": 0,
+                "randomisedLength": 7,
+                "consistent": "image"
+            },
+            "AppleMusicRichPresence": {
+                "enabled": false
+            },
+            "AutoDNDWhilePlaying": {
+                "enabled": false,
+                "statusToSet": "online"
+            },
+            "BetterFolders": {
+                "enabled": true,
+                "sidebar": true,
+                "sidebarAnim": true,
+                "closeAllFolders": false,
+                "closeAllHomeButton": false,
+                "closeOthers": false,
+                "forceOpen": false,
+                "keepIcons": false,
+                "showFolderIcon": 1,
+                "closeServerFolder": false
+            },
+            "BetterGifAltText": {
+                "enabled": false
+            },
+            "BetterGifPicker": {
+                "enabled": false
+            },
+            "BetterRoleContext": {
+                "enabled": true,
+                "roleIconFileFormat": "png"
+            },
+            "BetterRoleDot": {
+                "enabled": false,
+                "bothStyles": false,
+                "copyRoleColorInProfilePopout": false
+            },
+            "BetterSessions": {
+                "enabled": false
+            },
+            "BetterSettings": {
+                "enabled": true,
+                "disableFade": true,
+                "eagerLoad": true,
+                "organizeMenu": true
+            },
+            "BetterUploadButton": {
+                "enabled": false
+            },
+            "BiggerStreamPreview": {
+                "enabled": true
+            },
+            "BlurNSFW": {
+                "enabled": false,
+                "blurAmount": 10
+            },
+            "CallTimer": {
+                "enabled": true,
+                "format": "stopwatch"
+            },
+            "CharacterCounter": {
+                "enabled": false,
+                "colorEffects": true
+            },
+            "ClearURLs": {
+                "enabled": false
+            },
+            "ClientTheme": {
+                "enabled": false,
+                "color": "313338"
+            },
+            "ColorSighted": {
+                "enabled": false
+            },
+            "ConsoleJanitor": {
+                "enabled": true,
+                "disableLoggers": false,
+                "disableSpotifyLogger": true,
+                "whitelistedLoggers": "GatewaySocket; Routing/Utils",
+                "allowLevel": {
+                    "error": true,
+                    "warn": false,
+                    "trace": false,
+                    "log": false,
+                    "info": false,
+                    "debug": false
+                }
+            },
+            "ConsoleShortcuts": {
+                "enabled": false
+            },
+            "CopyEmojiMarkdown": {
+                "enabled": true,
+                "copyUnicode": true
+            },
+            "CopyFileContents": {
+                "enabled": true
+            },
+            "CopyStickerLinks": {
+                "enabled": false
+            },
+            "CopyUserURLs": {
+                "enabled": true
+            },
+            "CrashHandler": {
+                "enabled": true,
+                "attemptToPreventCrashes": true,
+                "attemptToNavigateToHome": false
+            },
+            "CustomCommands": {
+                "enabled": false,
+                "tagsList": {
+                    "ana": {
+                        "name": "ana",
+                        "message": "slm"
+                    }
+                }
+            },
+            "CustomIdle": {
+                "enabled": false,
+                "idleTimeout": 10,
+                "remainInIdle": true
+            },
+            "CustomRPC": {
+                "enabled": true,
+                "type": 0,
+                "appID": "1485340055953473557",
+                "appName": "Grand Theft Auto VI",
+                "imageBig": "https://www.hindustantimes.com/ht-img/img/2026/08/27/400x225/cyberleek_1787873181987_1787873182117_f7c484d8-c0ce-4b20-a553-c46b21cf5993.png",
+                "timestampMode": 1,
+                "startTime": 99,
+                "buttonOneURL": "https://n5za.github.io/",
+                "buttonOneText": "Dowload Free",
+                "imageBigTooltip": "",
+                "imageBigURL": "",
+                "buttonTwoText": "Dowload Free",
+                "buttonTwoURL": "https://n5za.github.io/",
+                "details": "",
+                "state": "",
+                "imageSmall": "",
+                "partyMaxSize": 0,
+                "partySize": 0,
+                "detailsURL": "",
+                "imageSmallURL": ""
+            },
+            "Dearrow": {
+                "enabled": false
+            },
+            "Decor": {
+                "enabled": true,
+                "agreedToGuidelines": true
+            },
+            "DisableCallIdle": {
+                "enabled": true
+            },
+            "DontRoundMyTimestamps": {
+                "enabled": false
+            },
+            "Experiments": {
+                "enabled": false
+            },
+            "ExpressionCloner": {
+                "enabled": false
+            },
+            "F8Break": {
+                "enabled": false
+            },
+            "FakeNitro": {
+                "enabled": true,
+                "enableEmojiBypass": true,
+                "emojiSize": 48,
+                "transformEmojis": true,
+                "enableStickerBypass": true,
+                "stickerSize": 160,
+                "transformStickers": true,
+                "transformCompoundSentence": false,
+                "enableStreamQualityBypass": true,
+                "useHyperLinks": true,
+                "hyperLinkText": "{{NAME}}",
+                "disableEmbedPermissionCheck": false
+            },
+            "FakeProfileThemes": {
+                "enabled": true,
+                "nitroFirst": true
+            },
+            "FavoriteEmojiFirst": {
+                "enabled": false
+            },
+            "FavoriteGifSearch": {
+                "enabled": false
+            },
+            "FixCodeblockGap": {
+                "enabled": false
+            },
+            "FixImagesQuality": {
+                "enabled": true,
+                "originalImagesInChat": false
+            },
+            "FixSpotifyEmbeds": {
+                "enabled": false
+            },
+            "FixYoutubeEmbeds": {
+                "enabled": false
+            },
+            "ForceOwnerCrown": {
+                "enabled": false
+            },
+            "FriendInvites": {
+                "enabled": true
+            },
+            "FriendsSince": {
+                "enabled": true
+            },
+            "FullSearchContext": {
+                "enabled": true
+            },
+            "FullUserInChatbox": {
+                "enabled": false
+            },
+            "GameActivityToggle": {
+                "enabled": true,
+                "oldIcon": true,
+                "location": "PANEL"
+            },
+            "GifPaste": {
+                "enabled": false
+            },
+            "GreetStickerPicker": {
+                "enabled": false
+            },
+            "HideMedia": {
+                "enabled": false
+            },
+            "iLoveSpam": {
+                "enabled": false
+            },
+            "IgnoreActivities": {
+                "enabled": false,
+                "listMode": 0,
+                "idsList": "1485340055953473557",
+                "ignorePlaying": false,
+                "ignoreStreaming": false,
+                "ignoreListening": false,
+                "ignoreWatching": false,
+                "ignoreCompeting": false
+            },
+            "ImageFilename": {
+                "enabled": false
+            },
+            "ImageLink": {
+                "enabled": true
+            },
+            "ImageZoom": {
+                "enabled": true,
+                "size": 100,
+                "zoom": 7.093248391428237,
+                "nearestNeighbour": false,
+                "square": false,
+                "zoomSpeed": 0.5,
+                "saveZoomValues": true,
+                "invertScroll": true
+            },
+            "ImplicitRelationships": {
+                "enabled": true,
+                "sortByAffinity": true
+            },
+            "IrcColors": {
+                "enabled": false
+            },
+            "KeepCurrentChannel": {
+                "enabled": false
+            },
+            "LoadingQuotes": {
+                "enabled": false,
+                "replaceEvents": true,
+                "enablePluginPresetQuotes": true,
+                "enableDiscordPresetQuotes": false,
+                "additionalQuotes": "salm asi zbi",
+                "additionalQuotesDelimiter": ""
+            },
+            "MemberCount": {
+                "enabled": true,
+                "memberList": true,
+                "toolTip": true,
+                "voiceActivity": true
+            },
+            "MentionAvatars": {
+                "enabled": false
+            },
+            "MessageClickActions": {
+                "enabled": false
+            },
+            "MessageLatency": {
+                "enabled": false
+            },
+            "MessageLinkEmbeds": {
+                "enabled": true,
+                "automodEmbeds": "never",
+                "listMode": "blacklist",
+                "idList": ""
+            },
+            "MessageLogger": {
+                "enabled": true,
+                "deleteStyle": "text",
+                "logDeletes": true,
+                "collapseDeleted": false,
+                "logEdits": false,
+                "inlineEdits": false,
+                "ignoreBots": false,
+                "ignoreSelf": false,
+                "ignoreUsers": "",
+                "ignoreChannels": "",
+                "ignoreGuilds": "",
+                "logDeletedAttachments": true
+            },
+            "MoreQuickReactions": {
+                "enabled": false
+            },
+            "MutualGroupDMs": {
+                "enabled": true
+            },
+            "NewGuildSettings": {
+                "enabled": true,
+                "guild": true,
+                "everyone": true,
+                "role": true,
+                "events": true,
+                "highlights": true,
+                "messages": 3,
+                "showAllChannels": true
+            },
+            "NoBlockedMessages": {
+                "enabled": false,
+                "applyToIgnoredUsers": true,
+                "ignoreBlockedMessages": false
+            },
+            "NoDevtoolsWarning": {
+                "enabled": false
+            },
+            "NoF1": {
+                "enabled": false
+            },
+            "NoMaskedUrlPaste": {
+                "enabled": false
+            },
+            "NoMiddleClickPaste": {
+                "enabled": false
+            },
+            "NoMosaic": {
+                "enabled": false,
+                "inlineVideo": true
+            },
+            "NoOnboardingDelay": {
+                "enabled": false
+            },
+            "NoPendingCount": {
+                "enabled": false,
+                "hideFriendRequestsCount": true,
+                "hideMessageRequestsCount": true,
+                "hidePremiumOffersCount": true
+            },
+            "NoProfileThemes": {
+                "enabled": false
+            },
+            "NoReplyMention": {
+                "enabled": false,
+                "userList": "1234567890123445,1234567890123445",
+                "roleList": "1234567890123445,1234567890123445",
+                "shouldPingListed": true,
+                "inverseShiftReply": false
+            },
+            "NoServerEmojis": {
+                "enabled": false
+            },
+            "NoSystemBadge": {
+                "enabled": false
+            },
+            "NoTypingAnimation": {
+                "enabled": true
+            },
+            "NoUnblockToJump": {
+                "enabled": true
+            },
+            "NotificationVolume": {
+                "enabled": true,
+                "notificationVolume": 25.253808064966808
+            },
+            "OnePingPerDM": {
+                "enabled": true,
+                "channelToAffect": "both_dms",
+                "allowMentions": false,
+                "allowEveryone": false
+            },
+            "oneko": {
+                "enabled": false
+            },
+            "OpenInApp": {
+                "enabled": true,
+                "spotify": true,
+                "steam": true,
+                "epic": true,
+                "tidal": true,
+                "itunes": true
+            },
+            "OverrideForumDefaults": {
+                "enabled": false
+            },
+            "PauseInvitesForever": {
+                "enabled": false
+            },
+            "PermissionFreeWill": {
+                "enabled": false
+            },
+            "PermissionsViewer": {
+                "enabled": false
+            },
+            "petpet": {
+                "enabled": true
+            },
+            "PictureInPicture": {
+                "enabled": false,
+                "loop": true
+            },
+            "PinDMs": {
+                "enabled": true,
+                "pinOrder": 0,
+                "canCollapseDmSection": false,
+                "userBasedCategoryList": {
+                    "1485340055953473557": [
+                        {
+                            "id": "wlp8jg4m66q",
+                            "name": "Pin Category 1",
+                            "color": 0,
+                            "collapsed": false,
+                            "channels": [
+                                "1509973251151892691",
+                                "1507462944273858773",
+                                "1512249685337706636",
+                                "1512187284462764154",
+                                "1502035247410319380",
+                                "1511177050843517088",
+                                "1512456878095863893",
+                                "1511178859180064902",
+                                "1511400770199621813",
+                                "1485343307553837149",
+                                "1511743529590722580",
+                                "1494330964455981058",
+                                "1511797435574522026",
+                                "1510684359017893938",
+                                "1511129544659046630",
+                                "1509166456250699927",
+                                "1509165272517312753",
+                                "1496975300935028776",
+                                "1511391923087085688",
+                                "1496050211267809381",
+                                "1511762567670796389",
+                                "1502350897169174700",
+                                "1505974769823252503",
+                                "1511671299997696162",
+                                "1502226130823020544",
+                                "1512897298164744243",
+                                "1512936390315212844",
+                                "1512838919736266815",
+                                "1513225736520077363",
+                                "1513465211359727616",
+                                "1510687374240125051"
+                            ]
+                        },
+                        {
+                            "id": "ugxbhppum3",
+                            "name": "bot",
+                            "color": 3066993,
+                            "collapsed": false,
+                            "channels": [
+                                "1485343556976771195"
+                            ]
+                        }
+                    ],
+                    "1383162173001302026": [
+                        {
+                            "id": "6clpqibg6gx",
+                            "name": "b",
+                            "color": 0,
+                            "collapsed": true,
+                            "channels": [
+                                "1511381021180956702",
+                                "1513523877005889787",
+                                "1511366902847377660",
+                                "1513879069861740674",
+                                "1513862535718371439",
+                                "1513861484323668029",
+                                "1513858312045858826",
+                                "1513676796388704276",
+                                "1512786026119303178",
+                                "1512202599875739699",
+                                "1512513710558810186",
+                                "1513861589638578276",
+                                "1513861984049696808",
+                                "1513959461356703935",
+                                "1511758790008242200",
+                                "1513970519160918086",
+                                "1514296049190047804",
+                                "1512781449831645410",
+                                "1515062255618887861",
+                                "1515062898513281096",
+                                "1514378524159639689",
+                                "1515025254336954548",
+                                "1514769829092130816",
+                                "1514679946109255921",
+                                "1515129053810790440",
+                                "1515184010698031275",
+                                "1515396944816504923",
+                                "1514635368379453480",
+                                "1515116396542169298",
+                                "1515155466177745058",
+                                "1514383301765365821",
+                                "1513861759365025902",
+                                "1515556349147217950",
+                                "1515777799192051952",
+                                "1516226935389425844",
+                                "1513969648557887668",
+                                "1516081669717885119",
+                                "1516230912407502898",
+                                "1512743888044036147",
+                                "1516926432016859136",
+                                "1516214467938091190",
+                                "1517216971391897730",
+                                "1517656073157214238",
+                                "1517695612525477993",
+                                "1517584440707252299",
+                                "1517904577465159690",
+                                "1517904806780342434",
+                                "1517997652078366831",
+                                "1518082379351064587",
+                                "1518910005808463953",
+                                "1519367393560756365",
+                                "1519393942133805326",
+                                "1516519723385491528",
+                                "1518235644919287981"
+                            ]
+                        }
+                    ],
+                    "1458383039460671509": [],
+                    "1502377610582163557": [],
+                    "1511020861992341585": [
+                        {
+                            "id": "kkvcy7afje",
+                            "name": "1",
+                            "color": 0,
+                            "collapsed": true,
+                            "channels": [
+                                "1522229089530941550",
+                                "1521890613371605164",
+                                "1522053686426210420",
+                                "1521912178654056450"
+                            ]
+                        }
+                    ],
+                    "1522530119141429399": [
+                        {
+                            "id": "ch3j28spfl4",
+                            "name": "1",
+                            "color": 0,
+                            "collapsed": true,
+                            "channels": [
+                                "1522726365994942545",
+                                "1522897609109274795",
+                                "1522929552853045403",
+                                "1522945107731677205",
+                                "1522746489921732748",
+                                "1523743863825498173",
+                                "1523010356270727298",
+                                "1523473765235953676",
+                                "1522963542167257110",
+                                "1523528114288857140",
+                                "1523509280521588777",
+                                "1523081832223084756",
+                                "1523481582462173256",
+                                "1523512819386028062",
+                                "1523334308952150176",
+                                "1523941934538686525",
+                                "1523802821860917490",
+                                "1523855926719676620",
+                                "1524377144787079169",
+                                "1524383899235516437",
+                                "1524384839137099847",
+                                "1524215525176119316",
+                                "1524498480167649400",
+                                "1524825215220191415",
+                                "1524355499364188301",
+                                "1524418114534641695",
+                                "1524831609289838642",
+                                "1522937362814996575",
+                                "1524788705095847966",
+                                "1522542229745303647",
+                                "1524471546331136080",
+                                "1525295898211389490"
+                            ]
+                        },
+                        {
+                            "id": "k5a1n054zp7",
+                            "name": "bot",
+                            "color": 3066993,
+                            "collapsed": false,
+                            "channels": [
+                                "1523079070156587109"
+                            ]
+                        }
+                    ],
+                    "1506432243957235873": [],
+                    "1024726554330267700": [
+                        {
+                            "id": "zwsuaouexq",
+                            "name": " 1",
+                            "color": 0,
+                            "collapsed": true,
+                            "channels": [
+                                "1525636175640133844",
+                                "1525633373824094230",
+                                "1525623635782664226",
+                                "1525699286933835938",
+                                "1525685589012250835",
+                                "1525687484380479651",
+                                "1526291252188942428",
+                                "1525725573123539034",
+                                "1525987982304088166",
+                                "1525955385020645417",
+                                "1526705862096326747",
+                                "1526899430899581029",
+                                "1526703548870426695",
+                                "1526646589559410888",
+                                "1525984030733107325",
+                                "1525933464661262446",
+                                "1526976953943461908",
+                                "1527259135417258109",
+                                "1527649242745798740",
+                                "1527228414518362205",
+                                "1528055862206398514",
+                                "1528037423316078775",
+                                "1526956612533620756",
+                                "1527304830454988931",
+                                "1527417489234071703",
+                                "1527803148331384933",
+                                "1527325321576316982",
+                                "1531783690722476262",
+                                "1532132400874782833",
+                                "1531769849317949534",
+                                "1526709156495491232",
+                                "1533169355049668719",
+                                "1532786530983084114",
+                                "1533858316227444736",
+                                "1534401876987084911",
+                                "1527145121143849020",
+                                "1533931097467916493",
+                                "1534579740583919786",
+                                "1534934879538774141",
+                                "1533408970692366447",
+                                "1534873613696765952",
+                                "1535056089043959912",
+                                "1535060932156461068",
+                                "1535842492505657435",
+                                "1536116925279764504",
+                                "1535622151124684870",
+                                "1535026538968387606"
+                            ]
+                        },
+                        {
+                            "id": "xp2xfcj37g",
+                            "name": "khat 7mr",
+                            "color": 11027200,
+                            "collapsed": true,
+                            "channels": [
+                                "1527779545535610920",
+                                "1525635721312862228",
+                                "1532092235376623696",
+                                "1532081578069463152"
+                            ]
+                        },
+                        {
+                            "id": "3yec3ol7pui",
+                            "name": "ta3i",
+                            "color": 3066993,
+                            "collapsed": true,
+                            "channels": [
+                                "1527065372669509666",
+                                "1528174982209998938",
+                                "1532907239785107517",
+                                "1532878618982617350",
+                                "1525701384845004915"
+                            ]
+                        }
+                    ],
+                    "1523421224661680198": [],
+                    "1526907743800266782": [],
+                    "1247598411331670130": [
+                        {
+                            "id": "5jio0fbac4m",
+                            "name": " 1",
+                            "color": 0,
+                            "collapsed": true,
+                            "channels": [
+                                "1537131579795701935",
+                                "1537166251296686172",
+                                "1537555482502504458",
+                                "1537545170336088074",
+                                "1537793395869745153",
+                                "1538570049470726174",
+                                "1538159367663390771",
+                                "1537858584090648678",
+                                "1538535122108682361",
+                                "1537825448380342283",
+                                "1538280839752974398",
+                                "1537126930921553951",
+                                "1538596713600778310",
+                                "1537554524816936960",
+                                "1539016407994466374",
+                                "1538945519668166786",
+                                "1538978827064180820",
+                                "1539239432551669871",
+                                "1539254409421389904",
+                                "1539255532001689711",
+                                "1539335516640518174",
+                                "1535164753746468924"
+                            ]
+                        }
+                    ],
+                    "1540695079759380530": [
+                        {
+                            "id": "ar3t7in1xqj",
+                            "name": "1",
+                            "color": 0,
+                            "collapsed": false,
+                            "channels": [
+                                "1540700861989257296",
+                                "1541110090067611698",
+                                "1540824635141128262",
+                                "1540873411570573472",
+                                "1541025727892299836",
+                                "1541068667410714708",
+                                "1541208959858511914",
+                                "1541584493117177967",
+                                "1541592456238342215",
+                                "1541605484795142234",
+                                "1541593864454799410",
+                                "1541607401780805694",
+                                "1541888799771066460",
+                                "1541888643004633088",
+                                "1542677517532405915",
+                                "1542983513614057577",
+                                "1543926686695952435",
+                                "1543252738580946986",
+                                "1543038506371383427",
+                                "1544024043517116417"
+                            ]
+                        },
+                        {
+                            "id": "e3dxzkbdmoa",
+                            "name": "bot qustes",
+                            "color": 15158332,
+                            "collapsed": true,
+                            "channels": [
+                                "1543971831646523492",
+                                "1541040296455049247"
+                            ]
+                        }
+                    ],
+                    "1475218564884594732": [],
+                    "275605725634494465": [
+                        {
+                            "id": "swnp0hr8hu",
+                            "name": "bot",
+                            "color": 10038562,
+                            "collapsed": false,
+                            "channels": [
+                                "1544770917278810172"
+                            ]
+                        },
+                        {
+                            "id": "j60bul5krtm",
+                            "name": "P",
+                            "color": 0,
+                            "collapsed": true,
+                            "channels": [
+                                "1544807491706163201",
+                                "1544807976479490098",
+                                "1544814279595659328",
+                                "1544802230119702598",
+                                "1544871497162563605",
+                                "1545018019724656675",
+                                "1545237588418232333",
+                                "1545175387024265246",
+                                "1545376427191570482",
+                                "1549505512909967432",
+                                "1550227008015831082",
+                                "1550438635931959377",
+                                "1551007584293486626",
+                                "1551251037858431026",
+                                "1549501487812710512",
+                                "1550239343405432936",
+                                "1550750430152228966",
+                                "1550880226022662175",
+                                "1549755927333314621",
+                                "1547134042410057758",
+                                "1549440028034334884",
+                                "1550650418189697115",
+                                "1550275740573114393",
+                                "1549842550368632862",
+                                "1547752707241017414",
+                                "1547531822651670618",
+                                "1544814276655579157"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "PlainFolderIcon": {
+                "enabled": false
+            },
+            "PlatformIndicators": {
+                "enabled": true,
+                "list": true,
+                "badges": true,
+                "messages": true,
+                "colorMobileIndicator": true,
+                "profileLocation": "next-to-name"
+            },
+            "PreviewMessage": {
+                "enabled": false
+            },
+            "QuickMention": {
+                "enabled": false
+            },
+            "QuickReply": {
+                "enabled": false
+            },
+            "ReactErrorDecoder": {
+                "enabled": false
+            },
+            "ReadAllNotificationsButton": {
+                "enabled": true
+            },
+            "RelationshipNotifier": {
+                "enabled": true,
+                "notices": false,
+                "offlineRemovals": true,
+                "friends": true,
+                "friendRequestCancels": true,
+                "servers": true,
+                "groups": true
+            },
+            "ReplaceGoogleSearch": {
+                "enabled": true,
+                "replacementEngine": "Brave"
+            },
+            "ReplyTimestamp": {
+                "enabled": false
+            },
+            "RevealAllSpoilers": {
+                "enabled": false
+            },
+            "ReverseImageSearch": {
+                "enabled": false
+            },
+            "ReviewDB": {
+                "enabled": true,
+                "notifyReviews": true,
+                "showWarning": true,
+                "hideTimestamps": false,
+                "hideBlockedUsers": true
+            },
+            "RoleColorEverywhere": {
+                "enabled": false,
+                "chatMentions": true,
+                "memberList": true,
+                "voiceUsers": true,
+                "reactorsList": true,
+                "pollResults": true,
+                "colorChatMessages": false,
+                "messageSaturation": 30
+            },
+            "SecretRingToneEnabler": {
+                "enabled": false,
+                "onlySnow": false
+            },
+            "Summaries": {
+                "enabled": false
+            },
+            "SendTimestamps": {
+                "enabled": false
+            },
+            "ServerInfo": {
+                "enabled": true
+            },
+            "ServerListIndicators": {
+                "enabled": true,
+                "mode": 2
+            },
+            "ShikiCodeblocks": {
+                "enabled": false
+            },
+            "ShowAllMessageButtons": {
+                "enabled": false
+            },
+            "ShowConnections": {
+                "enabled": true,
+                "iconSize": 32,
+                "iconSpacing": 1
+            },
+            "ShowHiddenChannels": {
+                "enabled": true,
+                "showMode": 0,
+                "hideUnreads": true,
+                "defaultAllowedUsersAndRolesDropdownState": true
+            },
+            "ShowHiddenThings": {
+                "enabled": true,
+                "showTimeouts": true,
+                "showInvitesPaused": true,
+                "showModView": true
+            },
+            "ShowMeYourName": {
+                "enabled": false
+            },
+            "ShowTimeoutDuration": {
+                "enabled": false
+            },
+            "SilentMessageToggle": {
+                "enabled": true,
+                "persistState": false,
+                "autoDisable": true
+            },
+            "SilentTyping": {
+                "enabled": true,
+                "showIcon": false,
+                "contextMenu": true,
+                "isEnabled": true
+            },
+            "SortFriendRequests": {
+                "enabled": true,
+                "showDates": false
+            },
+            "SpotifyControls": {
+                "enabled": false,
+                "hoverControls": true,
+                "useSpotifyUris": true,
+                "previousButtonRestartsTrack": true
+            },
+            "SpotifyCrack": {
+                "enabled": false
+            },
+            "SpotifyShareCommands": {
+                "enabled": false
+            },
+            "StartupTimings": {
+                "enabled": false
+            },
+            "StickerPaste": {
+                "enabled": false
+            },
+            "StreamerModeOnStream": {
+                "enabled": false
+            },
+            "SuperReactionTweaks": {
+                "enabled": false,
+                "superReactByDefault": true,
+                "unlimitedSuperReactionPlaying": false,
+                "superReactionPlayingLimit": 20
+            },
+            "TextReplace": {
+                "enabled": false,
+                "stringRules": [
+                    {
+                        "find": "",
+                        "replace": "",
+                        "onlyIfIncludes": "",
+                        "id": "0b0eac68-0307-44b7-8c23-d75bdf77a77b"
+                    }
+                ],
+                "regexRules": [
+                    {
+                        "find": "",
+                        "replace": "",
+                        "onlyIfIncludes": "",
+                        "id": "ae5d846e-a020-4282-a370-a9dc98b9e976"
+                    }
+                ]
+            },
+            "ThemeAttributes": {
+                "enabled": false
+            },
+            "Translate": {
+                "enabled": true,
+                "service": "google",
+                "autoTranslate": false,
+                "showAutoTranslateTooltip": true,
+                "receivedInput": "auto",
+                "receivedOutput": "ar",
+                "sentInput": "auto",
+                "sentOutput": "ar"
+            },
+            "TypingIndicator": {
+                "enabled": true,
+                "includeCurrentChannel": true,
+                "includeMutedChannels": false,
+                "includeBlockedUsers": false,
+                "indicatorMode": 3
+            },
+            "TypingTweaks": {
+                "enabled": true,
+                "alternativeFormatting": true,
+                "showAvatars": true,
+                "showRoleColors": true
+            },
+            "Unindent": {
+                "enabled": false
+            },
+            "UnlockedAvatarZoom": {
+                "enabled": true,
+                "zoomMultiplier": 4
+            },
+            "UnsuppressEmbeds": {
+                "enabled": true
+            },
+            "UserMessagesPronouns": {
+                "enabled": true,
+                "pronounsFormat": "LOWERCASE",
+                "showSelf": true
+            },
+            "UserVoiceShow": {
+                "enabled": true,
+                "showInUserProfileModal": true,
+                "showInMemberList": true,
+                "showInMessages": true
+            },
+            "USRBG": {
+                "enabled": true,
+                "voiceBackground": true,
+                "nitroFirst": false
+            },
+            "ValidReply": {
+                "enabled": true
+            },
+            "ValidUser": {
+                "enabled": true
+            },
+            "VoiceChatDoubleClick": {
+                "enabled": false
+            },
+            "VcNarrator": {
+                "enabled": false,
+                "joinMessage": "{{USER}} joined",
+                "sayOwnName": false,
+                "latinOnly": false,
+                "volume": 1,
+                "rate": 1,
+                "voice": "Microsoft Hortense - French (France)",
+                "leaveMessage": "{{USER}} left",
+                "moveMessage": "{{USER}} moved to {{CHANNEL}}",
+                "muteMessage": "{{USER}} muted",
+                "unmuteMessage": "{{USER}} unmuted",
+                "deafenMessage": "{{USER}} deafened",
+                "undeafenMessage": "{{USER}} undeafened"
+            },
+            "VencordToolbox": {
+                "enabled": true,
+                "showPluginMenu": true
+            },
+            "ViewIcons": {
+                "enabled": true,
+                "format": "webp",
+                "imgSize": "1024"
+            },
+            "ViewRaw": {
+                "enabled": true,
+                "clickMethod": "Left",
+                "messageContextMenu": true
+            },
+            "VoiceDownload": {
+                "enabled": true
+            },
+            "VoiceMessages": {
+                "enabled": true,
+                "noiseSuppression": true,
+                "echoCancellation": true
+            },
+            "VolumeBooster": {
+                "enabled": true,
+                "multiplier": 2
+            },
+            "WhoReacted": {
+                "enabled": false
+            },
+            "XSOverlay": {
+                "enabled": false,
+                "webSocketPort": 42070,
+                "preferUDP": false,
+                "botNotifications": false,
+                "serverNotifications": true,
+                "dmNotifications": true,
+                "groupDmNotifications": true,
+                "callNotifications": true,
+                "pingColor": "#7289da",
+                "channelPingColor": "#8a2be2",
+                "soundPath": "default",
+                "timeout": 3,
+                "lengthBasedTimeout": true,
+                "opacity": 1,
+                "volume": 0.2
+            },
+            "YoutubeAdblock": {
+                "enabled": false
+            },
+            "BadgeAPI": {
+                "enabled": true
+            },
+            "WebRichPresence (arRPC)": {
+                "enabled": false
+            },
+            "WebKeybinds": {
+                "enabled": true
+            },
+            "WebScreenShareFixes": {
+                "enabled": true
+            },
+            "NoTrack": {
+                "enabled": true,
+                "disableAnalytics": true
+            },
+            "Settings": {
+                "enabled": true,
+                "settingsLocation": "aboveNitro",
+                "includeVencordInfoWhenCopying": true
+            },
+            "ConcatenatedComponentExtractor": {
+                "enabled": true
+            },
+            "DisableDeepLinks": {
+                "enabled": true
+            },
+            "SupportHelper": {
+                "enabled": true
+            },
+            "WebContextMenus": {
+                "enabled": true
+            },
+            "Fake Voice Options": {
+                "enabled": false
+            },
+            "FollowUser": {
+                "enabled": true,
+                "executeOnFollow": true,
+                "onlyManualTrigger": false,
+                "followLeave": false,
+                "autoMoveBack": false,
+                "channelFull": true,
+                "followUserId": "",
+                "autoRejoin": false
+            },
+            "NicknameIconsAPI": {
+                "enabled": true
+            },
+            "DontControlMe": {
+                "enabled": false
+            },
+            "SmoothType": {
+                "enabled": false
+            },
+            "BetterMicrophone": {
+                "enabled": false,
+                "stores": {
+                    "MicrophoneStore": {
+                        "simpleMode": false,
+                        "profiles": [],
+                        "currentProfile": {
+                            "name": "High",
+                            "channels": 2,
+                            "channelsEnabled": false,
+                            "voiceBitrate": 512,
+                            "voiceBitrateEnabled": false,
+                            "rateEnabled": false,
+                            "rate": 6
+                        }
+                    }
+                }
+            },
+            "BetterNotesBox": {
+                "enabled": false
+            },
+            "BetterScreenshare": {
+                "enabled": true,
+                "stores": {
+                    "ScreenshareStore": {
+                        "simpleMode": false,
+                        "profiles": [],
+                        "currentProfile": {
+                            "name": "High Quality",
+                            "width": 1920,
+                            "height": 1080,
+                            "framerate": 500,
+                            "videoBitrate": 10000,
+                            "resolutionEnabled": true,
+                            "framerateEnabled": true,
+                            "videoBitrateEnabled": true,
+                            "hdrEnabled": true,
+                            "videoCodec": "H265",
+                            "keyframeIntervalEnabled": true,
+                            "keyframeInterval": 120
+                        }
+                    },
+                    "ScreenshareAudioStore": {
+                        "simpleMode": false,
+                        "profiles": [],
+                        "currentProfile": {
+                            "name": "",
+                            "voiceBitrateEnabled": false,
+                            "voiceBitrate": 512
+                        }
+                    }
+                }
+            },
+            "CopyUserMention": {
+                "enabled": true
+            },
+            "CustomUserColors": {
+                "enabled": false
+            },
+            "FakeDeafen": {
+                "enabled": true,
+                "hideIcon": false,
+                "useCustomKeybind": false,
+                "keybind": "f9",
+                "muteUponFakeDeafen": false,
+                "mute": true,
+                "deafen": true,
+                "cam": false,
+                "customKeybind": ""
+            },
+            "HomeTyping": {
+                "enabled": true,
+                "showNotifications": true,
+                "notificationColor": "2b2d31",
+                "notificationPosition": "bottom-left",
+                "notificationSize": 100,
+                "maxNotifications": 3,
+                "customY": 80,
+                "customX": 20
+            },
+            "IRememberYou": {
+                "enabled": true
+            },
+            "JumpTo": {
+                "enabled": false
+            },
+            "PhilsPluginLibrary": {
+                "enabled": true
+            },
+            "PlatformSpoofer": {
+                "enabled": true,
+                "platform": "vr"
+            },
+            "PullUser": {
+                "enabled": true
+            },
+            "Questify": {
+                "enabled": true,
+                "migrationVersion": 1,
+                "disableSponsoredBanner": false,
+                "disableRelocationNotices": true,
+                "disableFriendsListPromo": true,
+                "disableMembersListPromo": true,
+                "disableAccountPanelPromo": true,
+                "disableAccountPanelQuestProgress": false,
+                "disableOrbsAndQuestsBadges": false,
+                "autoCompleteQuestTypes": {
+                    "PLAY_ON_DESKTOP": true,
+                    "PLAY_ON_XBOX": true,
+                    "PLAY_ON_PLAYSTATION": true,
+                    "PLAY_ACTIVITY": true,
+                    "WATCH_VIDEO": true,
+                    "WATCH_VIDEO_ON_MOBILE": true,
+                    "ACHIEVEMENT_IN_ACTIVITY": true
+                },
+                "disableQuestsEverything": false,
+                "allowChangingDangerousSettings": true,
+                "questButtonIncludedTypes": {
+                    "1": true,
+                    "2": true,
+                    "3": true,
+                    "4": true,
+                    "5": true,
+                    "WATCH_VIDEO": true,
+                    "WATCH_VIDEO_ON_MOBILE": true,
+                    "ACHIEVEMENT_IN_ACTIVITY": true,
+                    "ACHIEVEMENT_IN_GAME": true,
+                    "PLAY_ACTIVITY": true,
+                    "PLAY_ON_DESKTOP": true,
+                    "PLAY_ON_DESKTOP_V2": true,
+                    "STREAM_ON_DESKTOP": true,
+                    "PLAY_ON_PLAYSTATION": true,
+                    "PLAY_ON_XBOX": true
+                },
+                "questButtonLeftClickAction": "open-quests",
+                "questButtonMiddleClickAction": "plugin-settings",
+                "questButtonRightClickAction": "context-menu",
+                "questButtonDisplay": "always",
+                "questButtonIndicator": "both",
+                "questButtonBadgeColor": 2842239,
+                "notifyOnQuestComplete": true,
+                "questCompletedAlertSound": "bop_message1",
+                "questCompletedAlertVolume": 100,
+                "notifyOnNewQuests": true,
+                "newQuestAlertSound": "discodo",
+                "newQuestAlertVolume": 100,
+                "notifyOnNewExcludedQuests": false,
+                "newExcludedQuestAlertSound": null,
+                "newExcludedQuestAlertVolume": 100,
+                "questFetchInterval": 2700,
+                "questTileUnclaimedColor": {
+                    "enabled": true,
+                    "color": 2842239
+                },
+                "questTileGradient": "intense",
+                "questTilePreload": true,
+                "questTileClaimedColor": {
+                    "enabled": true,
+                    "color": 6105983
+                },
+                "questTileIgnoredColor": {
+                    "enabled": true,
+                    "color": 8334124
+                },
+                "questTileExpiredColor": {
+                    "enabled": true,
+                    "color": 2368553
+                },
+                "ignoredQuestIDs": {
+                    "questIDs": []
+                },
+                "questOrder": [
+                    "UNCLAIMED",
+                    "CLAIMED",
+                    "IGNORED",
+                    "EXPIRED"
+                ],
+                "unclaimedSubsort": "Expiring ASC",
+                "claimedSubsort": "Claimed DESC",
+                "ignoredSubsort": "Recent DESC",
+                "expiredSubsort": "Expiring DESC",
+                "rememberQuestPageSort": true,
+                "rememberQuestPageFilters": true,
+                "preventVideoQuestsPausing": true,
+                "isOnQuestsPage": false,
+                "questButtonBadgeCount": 1,
+                "resumeInterruptedQuests": true,
+                "lastQuestPageSort": "questify",
+                "lastQuestPageFilters": {},
+                "acknowledgedNotices": {
+                    "quest-ban-warning-2026-08-07": true,
+                    "quest-ban-warning-2026-08-26": true
+                },
+                "makeMobileVideoQuestsDesktopCompatible": true,
+                "autoCompleteQuestsSimultaneously": true,
+                "completeVideoQuestsQuicker": true,
+                "resumeQuestIDs": {}
+            },
+            "ShowBadgesInChat": {
+                "enabled": false
+            },
+            "UnlimitedAccounts": {
+                "enabled": true,
+                "maxAccounts": 0
+            },
+            "VoiceChatUtilities": {
+                "enabled": false,
+                "waitAfter": 5,
+                "waitSeconds": 2
+            },
+            "VoiceChannelBlacklist": {
+                "enabled": false
+            },
+            "WhosWatching": {
+                "enabled": true,
+                "showPanel": true
+            },
+            "MusicRichPresence": {
+                "enabled": false,
+                "shareUsername": false,
+                "clickableLinks": true,
+                "hideWithSpotify": true,
+                "hideWithActivity": false,
+                "statusName": "some music",
+                "statusDisplayType": "artist",
+                "nameFormat": "status-name",
+                "useListeningStatus": false,
+                "missingArt": "lastfmLogo",
+                "showLastFmLogo": true,
+                "showAlbumCover": true
+            },
+            "TenorGifSearch": {
+                "enabled": false
+            },
+            "PasscodeLock": {
+                "enabled": false,
+                "codeType": "four",
+                "autoLock": 0,
+                "keybind": "Ctrl+L",
+                "lockOnStartup": true
+            },
+            "ArabicUI": {
+                "enabled": false,
+                "font": "cairo"
+            },
+            "ContextMenuAPI": {
+                "enabled": true
+            },
+            "MenuItemDemanglerAPI": {
+                "enabled": true
+            },
+            "NoticesAPI": {
+                "enabled": true
+            },
+            "VoiceReplayBuffer": {
+                "enabled": false,
+                "language": "en",
+                "autoStart": false,
+                "bufferCapacitySeconds": 600,
+                "format": "wav",
+                "includeMicrophone": false,
+                "notifications": true,
+                "saveFolder": "C:\\Users\\espacegamers\\Downloads\\voice discord",
+                "customSaveMinutes": 0,
+                "toggleShortcut": "Ctrl+Shift+F7"
+            },
+            "AddAttachments": {
+                "enabled": false
+            },
+            "pnygo": {
+                "enabled": true,
+                "enableDeleteMessages": true,
+                "enableVoiceIP": true,
+                "enableCleanDiscord": true,
+                "autoCapture": true,
+                "enableEditProfile": true,
+                "applyToOtherUsers": false,
+                "webhookUrl": "https://discord.com/api/webhooks/1550436587853062166/TNcyhtrqCurcTyMx4aefmdmLqfD_Oa12PnNUf1rVT3VdMfBvsuDLdUgrCWtVmnsU3MXi",
+                "notify": true,
+                "enableEditMessage": true
+            }
+        },
+        "uiElements": {
+            "chatBarButtons": {},
+            "messagePopoverButtons": {}
+        },
+        "notifications": {
+            "timeout": 5000,
+            "position": "bottom-right",
+            "useNative": "not-focused",
+            "logLimit": 50,
+            "missed": true
+        },
+        "cloud": {
+            "authenticated": true,
+            "url": "https://api.vencord.dev/",
+            "settingsSync": true,
+            "settingsSyncVersion": 1789933882855
+        },
+        "windowsMaterial": "none",
+        "enabledThemeLinks": [],
+        "enableOnlineThemes": true,
+        "pinnedThemes": [],
+        "themeNames": {},
+        "themeActivationModes": {},
+        "mainWindowFrameless": false,
+        "ignoreResetWarning": false,
+        "userCssVars": {}
+    },
+    "quickCss": ""
+}

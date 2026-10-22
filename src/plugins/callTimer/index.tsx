@@ -48,8 +48,9 @@ const settings = definePluginSettings({
 
 export default definePlugin({
     name: "CallTimer",
-    description: "Add call timers for all users in voice channels and in the connection status.",
-    authors: [Devs.Ven, Devs.MaxHerbold, Devs.D3SOX],
+    description: "Adds a timer to vcs",
+    tags: ["Voice", "Utility"],
+    authors: [Devs.Ven],
     managedStyle: alignedChatInputFix,
     settings,
 
@@ -60,7 +61,7 @@ export default definePlugin({
         {
             find: '"RTCConnectionMenu"',
             replacement: {
-                match: /("RTCConnectionMenu".{0,200}?lineClamp:1,children:)(\i)(?=,|}\))/,
+                match: /("RTCConnectionMenu".{0,300}?lineClamp:1,children:)(\i)(?=,|}\))/,
                 replace: "$1[$2,$self.renderTimer({ channelId: this?.props?.channel?.id })]"
             }
         },

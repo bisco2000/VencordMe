@@ -29,7 +29,7 @@
 import ErrorBoundary from "@components/ErrorBoundary";
 import { copyWithToast, sendMessage } from "@utils/discord";
 import { Logger } from "@utils/Logger";
-import { ChannelActionCreators, ChannelStore, GuildMemberStore, GuildStore, Modal, React, showToast, Toasts, UserStore, VoiceStateStore } from "@webpack/common";
+import { ChannelActionCreators, ChannelStore, GuildMemberStore, GuildStore, Modal, React, showToast, UserStore, VoiceStateStore } from "@webpack/common";
 
 import { hit } from "./probe";
 import { Button, Card, Chip, CLS, Field, formatClock, Input, Muted, openPanel, Switch, TextArea, TitlebarButton, VIcon } from "./ui";
@@ -181,11 +181,11 @@ async function notify(userId: string, channelId: string, guildId: string): Promi
         await sendMessage(dmId, { content: buildMessage(name, link) });
         pushLog({ userId, name, link, at: Date.now(), ok: true });
         logger.info(`joinvc: room link sent to ${name} (${userId}) -> ${link}`);
-        showToast(`JoinVC — room link sent to ${name}`, Toasts.Type.SUCCESS);
+        showToast({ text: `JoinVC — room link sent to ${name}`, variant: "success" });
     } catch (e) {
         logger.warn(`could not send the room link to ${userId}:`, e);
         pushLog({ userId, name, link, at: Date.now(), ok: false });
-        showToast(`JoinVC — could not send the room link to ${name}`, Toasts.Type.FAILURE);
+        showToast({ text: `JoinVC — could not send the room link to ${name}`, variant: "critical" });
     }
 }
 

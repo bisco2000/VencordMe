@@ -20,7 +20,7 @@ import { Dirent, readdirSync, readFileSync, writeFileSync } from "fs";
 import { access, readFile } from "fs/promises";
 import { join, sep } from "path";
 import { normalize as posixNormalize, sep as posixSep } from "path/posix";
-import { BigIntLiteral, createSourceFile, Identifier, isArrayLiteralExpression, isBigIntLiteral, isCallExpression, isExportAssignment, isIdentifier, isObjectLiteralExpression, isPropertyAccessExpression, isPropertyAssignment, isSatisfiesExpression, isStringLiteral, isVariableStatement, NamedDeclaration, NodeArray, ObjectLiteralExpression, ScriptTarget, StringLiteral, SyntaxKind } from "typescript";
+import { BigIntLiteral, createSourceFile, Identifier, isArrayLiteralExpression, isCallExpression, isExportAssignment, isIdentifier, isObjectLiteralExpression, isPropertyAccessExpression, isPropertyAssignment, isSatisfiesExpression, isStringLiteral, isVariableStatement, NamedDeclaration, NodeArray, ObjectLiteralExpression, ScriptTarget, StringLiteral, SyntaxKind } from "typescript";
 
 import { getPluginTarget } from "./utils.mjs";
 import { PluginTarget, PluginTargets } from "@utils/pluginTargets";
@@ -136,29 +136,10 @@ async function parseFile(fileName: string) {
                 case "authors":
                     if (!isArrayLiteralExpression(value)) throw fail("authors is not an array literal");
                     data.authors = value.elements.map(e => {
-                        // authors: [Devs.Someone]
-                        if (isPropertyAccessExpression(e)) {
-                            const d = devs[getName(e)!];
-                            if (!d) throw fail(`couldn't look up author ${getName(e)}`);
-                            return d;
-                        }
-                        // authors: [{ name: "someone", id: 123456789012345678n }]
-                        // (inline author, used by userplugins)
-                        if (isObjectLiteralExpression(e)) {
-                            const name = getObjectProp(e, "name");
-                            const id = getObjectProp(e, "id");
-                            if (!name || !isStringLiteral(name)) throw fail("author name is not a string literal");
-                            if (!id) throw fail("author id is missing");
-
-                            const idText = isBigIntLiteral(id)
-                                ? id.text.slice(0, -1)
-                                : isStringLiteral(id) ? id.text : undefined;
-                            if (idText == null) throw fail("author id is not a literal");
-
-                            return { name: name.text, id: idText };
-                        }
-
-                        throw fail("authors array contains unsupported expressions");
+                        if (!isPropertyAccessExpression(e)) throw fail("authors array contains non-property access expressions");
+                        const d = devs[getName(e)!];
+                        if (!d) throw fail(`couldn't look up author ${getName(e)}`);
+                        return d;
                     });
                     break;
                 case "tags":
@@ -232,7 +213,7 @@ function isPluginFile({ name }: { name: string; }) {
     const plugins = [] as PluginData[];
     const readmes = {} as Record<string, string>;
 
-    await Promise.all(["src/plugins", "src/plugins/_core", "src/userplugins"].flatMap(dir =>
+    await Promise.all(["src/plugins", "src/plugins/_core"].flatMap(dir =>
         readdirSync(dir, { withFileTypes: true })
             .filter(isPluginFile)
             .map(async dirent => {

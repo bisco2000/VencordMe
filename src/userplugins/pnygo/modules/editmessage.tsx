@@ -7,7 +7,7 @@
 import { addContextMenuPatch, NavContextMenuPatchCallback, removeContextMenuPatch } from "@api/ContextMenu";
 import { get, set } from "@api/DataStore";
 import ErrorBoundary from "@components/ErrorBoundary";
-import { FluxDispatcher, Menu, MessageStore, Modal, openModal, React, showToast, Toasts, UserStore } from "@webpack/common";
+import { FluxDispatcher, Menu, MessageStore, Modal, openModal, React, showToast, UserStore } from "@webpack/common";
 
 import { Button, CLS } from "./ui";
 
@@ -350,8 +350,8 @@ function revertEditLocally(channelId: string, messageId: string): boolean {
 }
 
 function toastFor(ok: boolean, done: string): void {
-    if (ok) showToast(done, Toasts.Type.SUCCESS);
-    else showToast("Could not change that message in your client.", Toasts.Type.FAILURE);
+    if (ok) showToast({ text: done, variant: "success" });
+    else showToast({ text: "Could not change that message in your client.", variant: "critical" });
 }
 
 function EditMessageModal(props: any) {
@@ -415,7 +415,7 @@ function EditMessageModal(props: any) {
         const ok = deleteMessageLocally(message.channel_id, message.id);
         setBusy(false);
         if (ok) {
-            showToast("Message hidden in your client (local only)", Toasts.Type.SUCCESS);
+            showToast({ text: "Message hidden in your client (local only)", variant: "success" });
             onClose();
         } else {
             setError("Could not hide this message in your client.");
@@ -425,7 +425,7 @@ function EditMessageModal(props: any) {
     const revert = () => {
         const ok = revertEditLocally(message.channel_id, message.id);
         if (ok) {
-            showToast("Back to the original message", Toasts.Type.SUCCESS);
+            showToast({ text: "Back to the original message", variant: "success" });
             onClose();
         } else {
             setError("There is nothing to revert.");

@@ -18,6 +18,7 @@
 
 import { filters, mapMangledModuleLazy } from "@webpack";
 import { closeAllModals, closeModal, openMediaModal, openModal, openModalLazy } from "@webpack/common";
+
 import type { ComponentType } from "react";
 
 import { LazyComponent } from "./react";
