@@ -31,7 +31,9 @@ jobs:
       - name: Fetch upstream
         run: |
           git remote add upstream https://github.com/Vendicated/Vencord.git
-          git fetch upstream main --tags || git fetch upstream main --tags || (echo "fetch failed, retrying with explicit refs"; git fetch upstream 'refs/tags/*:refs/tags/*' 'refs/heads/main:refs/remotes/upstream/main')
+          # --force: our repo has a local `devbuild` tag that upstream also has;
+          # without --force git refuses to clobber and the fetch exits 1
+          git fetch upstream main --tags --force || git fetch upstream main --tags --force || (echo "fetch failed, retrying with explicit refs"; git fetch upstream --force 'refs/tags/*:refs/tags/*' 'refs/heads/main:refs/remotes/upstream/main')
 
       - name: Compare versions
         id: compare
