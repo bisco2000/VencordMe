@@ -1,0 +1,98 @@
+name: Upstream Auto-Sync Bot
+
+on:
+  schedule:
+    - cron: "0 4 * * *" # daily 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-sync
+  cancel-in-progress: false
+
+jobs:
+  check-upstream:
+    runs-on: ubuntu-latest
+    outputs:
+      has_new: ${{ steps.compare.outputs.has_new }}
+      upstream_version: ${{ steps.compare.outputs.upstream_version }}
+      local_version: ${{ steps.compare.outputs.local_version }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/Vendicated/Vencord.git
+          git fetch upstream main --tags --quiet
+
+      - name: Compare versions
+        id: compare
+        run: |
+          LOCAL_VER=$(python3 -c "import json;print(json.load(open('package.json'))['version'])")
+          UPSTREAM_TAG=$(git tag --list 'v*' --sort=-v:refname --merged refs/remotes/upstream/main | head -1)
+          UPSTREAM_VER=${UPSTREAM_TAG#v}
+          echo "local_ver=$LOCAL_VER" >> "$GITHUB_OUTPUT"
+          echo "upstream_version=$UPSTREAM_VER" >> "$GITHUB_OUTPUT"
+          NEWEST=$(printf '%s\n' "$LOCAL_VER" "$UPSTREAM_VER" | sort -V | tail -1)
+          if [ "$NEWEST" != "$LOCAL_VER" ]; then
+            echo "has_new=true"  >> "$GITHUB_OUTPUT"
+          else
+            echo "has_new=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  sync:
+    needs: check-upstream
+    if: needs.check-upstream.outputs.has_new == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Configure git
+        run: |
+          git config user.name "vencordme-bot[bot]"
+          git config user.email "bisco2000+bot@users.noreply.github.com"
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/Vendicated/Vencord.git
+          git fetch upstream main --tags --quiet
+
+      - name: Take upstream tree, preserve custom dirs
+        run: |
+          git checkout upstream/main -- .
+          # Restore our custom content over upstream's
+          git checkout HEAD~0 -- installer src/userplugins 2>/dev/null || true
+          git checkout HEAD -- installer src/userplugins 2>/dev/null || true
+          # Keep OUR workflow files (upstream's differ)
+          git checkout HEAD -- .github/workflows/build.yml .github/workflows/release.yml .github/workflows/publish.yml 2>/dev/null || true
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.BOT_TOKEN }}
+          commit-message: "feat(vencord-me): upgrade to upstream v${{ needs.check-upstream.outputs.upstream_version }}"
+          title: "🤖 Upstream sync: v${{ needs.check-upstream.outputs.upstream_version }}"
+          body: |
+            ## 🤖 Upstream Auto-Sync
+
+            Upstream **Vendicated/Vencord** is at **v${{ needs.check-upstream.outputs.upstream_version }}**; this repo is on **v${{ needs.check-upstream.outputs.local_version }}**.
+
+            All upstream-tracked paths were synced to `upstream/main`, preserving:
+            - `src/userplugins/pnygo` (custom plugin)
+            - `installer/` (custom installer)
+            - our workflow customizations
+
+            Merging this PR triggers the **Release Installer** workflow on tag push (merge bot's tag commit, or run release.yml manually).
+          branch: bot/upstream-sync
+          delete-branch: true
+          labels: upstream-sync
