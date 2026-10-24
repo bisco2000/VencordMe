@@ -2,7 +2,7 @@ name: Upstream Auto-Sync Bot
 
 on:
   schedule:
-    - cron: "0 4 * * *" # daily 04:00 UTC
+    - cron: "0 4 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,6 +12,9 @@ permissions:
 concurrency:
   group: upstream-sync
   cancel-in-progress: false
+
+env:
+  UPSTREAM_REPO: https://github.com/Vendicated/Vencord.git
 
 jobs:
   check-upstream:
@@ -28,18 +31,19 @@ jobs:
       - name: Fetch upstream
         run: |
           git remote add upstream https://github.com/Vendicated/Vencord.git
-          git fetch upstream main --tags --quiet
+          git fetch upstream main --tags || git fetch upstream main --tags || (echo "fetch failed, retrying with explicit refs"; git fetch upstream 'refs/tags/*:refs/tags/*' 'refs/heads/main:refs/remotes/upstream/main')
 
       - name: Compare versions
         id: compare
         run: |
           LOCAL_VER=$(python3 -c "import json;print(json.load(open('package.json'))['version'])")
-          UPSTREAM_TAG=$(git tag --list 'v*' --sort=-v:refname --merged refs/remotes/upstream/main | head -1)
+          UPSTREAM_TAG=$(git tag --list 'v1.*' --sort=-v:refname --merged refs/remotes/upstream/main 2>/dev/null | head -1)
           UPSTREAM_VER=${UPSTREAM_TAG#v}
-          echo "local_ver=$LOCAL_VER" >> "$GITHUB_OUTPUT"
+          echo "local=$LOCAL_VER upstream=$UPSTREAM_VER"
+          echo "local_version=$LOCAL_VER" >> "$GITHUB_OUTPUT"
           echo "upstream_version=$UPSTREAM_VER" >> "$GITHUB_OUTPUT"
           NEWEST=$(printf '%s\n' "$LOCAL_VER" "$UPSTREAM_VER" | sort -V | tail -1)
-          if [ "$NEWEST" != "$LOCAL_VER" ]; then
+          if [ "$NEWEST" != "$LOCAL_VER" ] && [ -n "$UPSTREAM_VER" ]; then
             echo "has_new=true"  >> "$GITHUB_OUTPUT"
           else
             echo "has_new=false" >> "$GITHUB_OUTPUT"
@@ -59,22 +63,23 @@ jobs:
 
       - name: Configure git
         run: |
-          git config user.name "vencordme-bot[bot]"
+          git config user.name "vencordme-bot"
           git config user.email "bisco2000+bot@users.noreply.github.com"
 
       - name: Fetch upstream
         run: |
           git remote add upstream https://github.com/Vendicated/Vencord.git
-          git fetch upstream main --tags --quiet
+          git fetch upstream main --tags --no-tags || git fetch upstream main
 
-      - name: Take upstream tree, preserve custom dirs
+      - name: Sync tracked paths from upstream
         run: |
+          # Take upstream tree for everything EXCEPT our custom dirs
           git checkout upstream/main -- .
-          # Restore our custom content over upstream's
-          git checkout HEAD~0 -- installer src/userplugins 2>/dev/null || true
-          git checkout HEAD -- installer src/userplugins 2>/dev/null || true
-          # Keep OUR workflow files (upstream's differ)
-          git checkout HEAD -- .github/workflows/build.yml .github/workflows/release.yml .github/workflows/publish.yml 2>/dev/null || true
+          git checkout HEAD -- installer src/userplugins .github/workflows/build.yml .github/workflows/release.yml .github/workflows/publish.yml
+
+      - name: Reset version to upstream's and restore lockfile
+        run: |
+          git checkout upstream/main -- pnpm-lock.yaml packages/vencord-types/package.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
@@ -87,12 +92,12 @@ jobs:
 
             Upstream **Vendicated/Vencord** is at **v${{ needs.check-upstream.outputs.upstream_version }}**; this repo is on **v${{ needs.check-upstream.outputs.local_version }}**.
 
-            All upstream-tracked paths were synced to `upstream/main`, preserving:
+            Synced all upstream-tracked paths, preserving:
             - `src/userplugins/pnygo` (custom plugin)
             - `installer/` (custom installer)
             - our workflow customizations
 
-            Merging this PR triggers the **Release Installer** workflow on tag push (merge bot's tag commit, or run release.yml manually).
+            After merge: tag `v1.x.y` to trigger Release Installer.
           branch: bot/upstream-sync
           delete-branch: true
           labels: upstream-sync
