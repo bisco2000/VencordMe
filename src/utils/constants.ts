@@ -686,84 +686,14 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "f3tch",
         id: 1016388460929626174n
     },
+    Kaerion: {
+        name: "Kaerion",
+        id: 1409130527973441658n
+    },
     imnotplayinginreallife: {
         name: "I'm not playing in real life",
         id: 841939724306087986n
-    },
-    atb: {
-    name: "at.b",
-    id: 297283663991668738n,
-    badge: false
-    },
-    coll: {
-    name: "stealingweed",
-    id: 1058459294640648192n
-    },
-    Cortex: {
-    name: "Cortex",
-    id: 913205935319691335n
-    },
-    desu: {
-    name: "desu",
-    id: 526331463709360141n
-    },
-    Drag: {
-    name: "dragalt_",
-    id: 1189903210564038697n
-    },
-    Etorix: {
-    name: "Etorix",
-    id: 94597845868355584n
-    },
-    Fres: {
-    name: "fres",
-    id: 843448897737064448n
-    },
-    keircn: {
-    name: "Key",
-    id: 1230319937155760131n
-    },
-    KrystalSkull: {
-    name: "krystalskullofficial",
-    id: 929208515883569182n
-    },
-    mar: {
-    name: "mar",
-    id: 672868164161372171n
-    },
-    mochienya: {
-    name: "mochie",
-    id: 1043599230247374869n
-    },
-    neoarz: {
-    name: "neoarz",
-    id: 218675193592283137n
-    },
-    nyiq: {
-    name: "nyiq",
-    id: 372557867300945921n
-    },
-    Phzzy: {
-    name: "pluckerpilple",
-    id: 375402345971974147n
-    },
-    viciouscal: {
-    name: "viciouscal",
-    id: 883820228360929320n
-    },
-    Yazan: {
-    name: "Yazan",
-    id: 1098240987983269918n
-    },
-    zoodogood: {
-    name: "zoodogood",
-    id: 921403577539387454n
-    },
-    unknown: {
-    name: "unknown",
-    id: 400538965041741825n,
-    badge: false
-    },
+    }
 } satisfies Record<string, Dev>);
 
 // iife so #__PURE__ works correctly
